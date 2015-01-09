@@ -16,16 +16,16 @@ export default {
               this.get('controller.currentRouteName')
             ),
             into: 'application',
-            outlet: 'modal', // Should be an addon option
+            outlet: options.get('outlet'),
             view: 'modal',
           });
 
           this.render(options.get('templateName'), options);
         },
 
-        removeModal: function() {
+        removeModal: function(options) {
           this.disconnectOutlet({
-            outlet: 'modal',
+            outlet: options.get('outlet'),
             parentView: 'application',
           });
         }
@@ -35,6 +35,12 @@ export default {
     Em.ControllerMixin.reopen({
       needs: ['modal'],
       modal: Em.computed.alias('controllers.modal'),
+
+      _actions: {
+        closeModal: function() {
+          this.get('modal').hide();
+        }
+      },
 
       showModal: function(options) {
         var modalOptions = {

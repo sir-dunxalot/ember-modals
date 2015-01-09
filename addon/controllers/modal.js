@@ -1,31 +1,32 @@
 import Em from 'ember';
 
 export default Em.ObjectController.extend(
-  Em.TargetActionSupport, {
+  Em.Evented, {
 
   controllerName: null,
   model: null,
   outlet: 'modal',
   templateName: null,
+  transitionDuration: 500, // Fallback from CSS value
 
-  modalOptions: function() {
+  _options: function() {
     return Em.Object.create({
       controllerName: this.get('controllerName'),
-      templateName: this.get('templateName')
+      outlet: this.get('outlet'),
+      templateName: this.get('templateName'),
     });
   }.property('controllerName', 'model', 'templateName'),
 
   show: function() {
-    this.triggerAction({
-      action: 'renderModal',
-      actionContext: this.get('modalOptions')
-    });
+    this.send('renderModal', this.get('_options'));
   },
 
   hide: function() {
-    this.triggerAction({
-      action: 'removeModal'
-    });
+    this.trigger('closeModal');
+
+    Em.run.later(this, function() {
+      this.send('removeModal', this.get('_options'));
+    }, this.get('transitionDuration'));
   },
 
 });

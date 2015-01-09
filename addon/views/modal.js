@@ -1,34 +1,21 @@
 import Em from 'ember';
 
 export default Em.View.extend(
-  Em.Evented,
-  Em.ViewTargetActionSupport, {
+  Em.Evented, {
 
-  classNames: ['modal_overlay'],
-  classNameBindings: ['showModal:fade_in_modal'],
+  classNames: ['overlay'],
+  classNameBindings: ['isModalVisible:'],
   layoutName: 'modal',
+  isModalVisible: false,
+  isOverlayVisible: false,
+  transitionTime: Em.computed.alias('controller.modal.transitionDuration'),
 
-  showModal: false,
-  transitionTime: 300, // Default
+  show: function() {
+    this.set('isModalVisible', true);
+  },
 
-  actions: {
-
-    closeModal: function() {
-      if (this.get('_state') === 'inDOM') {
-        this.set('showModal', false);
-
-        Em.run.later(this, function() {
-          this.triggerAction({
-            action: 'removeModal', // Action is on the application route
-          });
-
-
-        }, this.get('transitionTime'));
-
-        // return true; // Bubble - NEEDS to delay
-      }
-    },
-
+  hide: function() {
+    this.set('isModalVisible', false);
   },
 
   autofocus: function() {
@@ -39,25 +26,21 @@ export default Em.View.extend(
     }
   }.on('didInsertElement'),
 
-  fadeInModal: function() {
-    this.set('showModal', true);
-  }.on('didInsertElement'),
-
   setTransitionTime: function() {
     var ms = parseFloat(this.$().css('transition-duration')) * 1000; // In milliseconds
 
-    this.set('transitionTime', ms);
+    if (ms) {
+      this.set('transitionDuration', ms);
+    }
   }.on('didInsertElement'),
 
-  // watchForExternalCall: function() {
-  //   this.get('controller').on('closeModal', this, this._callCloseModal);
-  // }.on('willInsertElement'),
+  _listen: function() {
+    this.get('controller.modal').on('closeModal', this, this.hide);
+  }.on('willInsertElement'),
 
-  // _callCloseModal: function() {
-  //   this.triggerAction({
-  //     action: 'closeModal',
-  //     target: this
-  //   });
-  // },
+  _willShow: function() {
+    this.$().hide();
+    this.show();
+  }.on('didInsertElement'),
 
 });
