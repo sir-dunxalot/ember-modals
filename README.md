@@ -28,3 +28,5 @@ For more information on using ember-cli, visit [http://www.ember-cli.com/](http:
 ## TODO
 
 WAI-ARIA
+aria-haspopup for buttons
+aria-label or aria-labelledby for modal

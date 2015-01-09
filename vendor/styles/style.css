@@ -1,4 +1,11 @@
-.overlay, .modal {
+.overlay[aria-hidden], [aria-hidden] .modal {
+  transition: opacity 0.5s;
+  opacity: 0;
+
+  will-change: opacity;
+}
+
+.overlay[aria-hidden="true"], [aria-hidden="true"] .modal {
 
   /* Force Hardware Acceleration in WebKit */
   transform: translateZ(0);
@@ -6,13 +13,9 @@
   backface-visibility: hidden;
 
   pointer-events: none;
-  transition: opacity 0.5s;
-  opacity: 0;
-
-  will-change: opacity;
 }
 
-.overlay.visible, .visible .modal {
+.overlay[aria-hidden="false"], [aria-hidden="false"] .modal {
   opacity: 1;
   pointer-events: auto;
 }
@@ -29,51 +32,20 @@
 }
 
 .modal {
+  position: relative;
   background-color: white;
   max-width: 600px;
   padding: 40px;
   transition: opacity 1.5s;
   border-bottom: 2px solid #bbb;
-  box-shadow: 0 3px 10px 2px rgba(0,0,0,0.5);
+  box-shadow: 0 3px 20px 2px rgba(0,0,0,0.5);
 }
 
 .visible .modal {
   opacity: 1;
 }
 
-.icon-close {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 0.5;
-  color: #000000;
-  text-shadow: 0 1px 0 #ffffff;
-  opacity: 0.2;
-  filter: alpha(opacity=20);
-  text-decoration: none;
-  transition: opacity 0.3s;
-}
-
-.close:hover .icon-close {
-  color: #000000;
-  opacity: 0.4;
-  filter: alpha(opacity=40);
-  cursor: pointer;
-}
-
-.modal .hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-.modal button {
+.overlay button {
   border: none;
   outline: none;
   background: transparent;
@@ -85,4 +57,46 @@
   -webkit-font-smoothing: inherit;
   font-smoothing: inherit;
   -moz-osx-font-smoothing: inherit;
+}
+
+.modal .close {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+
+.icon-close {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 0.5;
+  text-shadow: 0 1px 0 #ffffff;
+  text-decoration: none;
+
+}
+
+.modal .close {
+  color: #000000;
+  transition: opacity 0.3s;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.modal .close:hover {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
+.modal .hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }

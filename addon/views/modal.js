@@ -1,13 +1,17 @@
 import Em from 'ember';
+import ifElse from 'ember-modals/utils/computed/if-else';
 
 export default Em.View.extend(
   Em.Evented, {
 
+  attributeBindings: ['ariaHidden:aria-hidden', 'aria-label'],
   classNameBindings: ['overlayClassName', 'visible'],
   layoutName: 'modal',
   visible: false,
   overlayClassName: 'overlay',
   transitionTime: Em.computed.alias('controller.modal.transitionDuration'),
+
+  ariaHidden: ifElse('visible', 'false', 'true'),
 
   show: function() {
     this.set('visible', true);
