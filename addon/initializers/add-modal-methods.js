@@ -16,8 +16,7 @@ export default {
               this.get('controller.currentRouteName')
             ),
             into: 'application',
-            outlet: options.get('outlet'),
-            view: 'modal',
+            view: options.get('viewName')
           });
 
           this.render(options.get('templateName'), options);
@@ -54,13 +53,12 @@ export default {
         if (typeof options === 'string') {
           modalOptions.templateName = options;
         } else {
+          Em.assert('You must pass a templateName to the showModal method', options['template']);
+
           modalOptions.templateName = options['template'];
           modalOptions.controllerName = options['controller'];
           modalOptions.model = options['model'];
         }
-
-        // Now check to see if we have a templateName
-        Em.assert('You must pass a templateName with the showModal action', modalOptions.templateName);
 
         for (var option in modalOptions) {
           this.set('modal.' + option, modalOptions[option]);

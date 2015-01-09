@@ -3,19 +3,18 @@ import Em from 'ember';
 export default Em.View.extend(
   Em.Evented, {
 
-  classNames: ['overlay'],
-  classNameBindings: ['isModalVisible:'],
+  classNameBindings: ['overlayClassName', 'visible'],
   layoutName: 'modal',
-  isModalVisible: false,
-  isOverlayVisible: false,
+  visible: false,
+  overlayClassName: 'overlay',
   transitionTime: Em.computed.alias('controller.modal.transitionDuration'),
 
   show: function() {
-    this.set('isModalVisible', true);
+    this.set('visible', true);
   },
 
   hide: function() {
-    this.set('isModalVisible', false);
+    this.set('visible', false);
   },
 
   autofocus: function() {
@@ -27,7 +26,8 @@ export default Em.View.extend(
   }.on('didInsertElement'),
 
   setTransitionTime: function() {
-    var ms = parseFloat(this.$().css('transition-duration')) * 1000; // In milliseconds
+    var modal = this.$('.modal');
+    var ms = parseFloat(modal.css('transition-duration')) * 1000;
 
     if (ms) {
       this.set('transitionDuration', ms);
@@ -35,11 +35,14 @@ export default Em.View.extend(
   }.on('didInsertElement'),
 
   _listen: function() {
-    this.get('controller.modal').on('closeModal', this, this.hide);
+    this.get('controller.modal').on('closeModal', this, function() {
+      if (!this.get('isDestroying')) {
+        this.hide();
+      }
+    });
   }.on('willInsertElement'),
 
   _willShow: function() {
-    this.$().hide();
     this.show();
   }.on('didInsertElement'),
 
