@@ -11,7 +11,6 @@ export default Em.ObjectController.extend(
   modalOptions: function() {
     return Em.Object.create({
       controllerName: this.get('controllerName'),
-      model: this.get('model'),
       templateName: this.get('templateName')
     });
   }.property('controllerName', 'model', 'templateName'),

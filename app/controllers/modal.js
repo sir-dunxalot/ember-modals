@@ -1,3 +1,3 @@
-import ModalController from 'ember-cli-modals/controllers/modal';
+import ModalController from 'ember-modals/controllers/modal';
 
 export default ModalController;

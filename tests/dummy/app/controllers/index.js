@@ -4,7 +4,7 @@ var template = 'test-modal';
 var controller = 'test-modal';
 var model = {
   name: 'test',
-}
+};
 
 export default Em.ObjectController.extend({
 

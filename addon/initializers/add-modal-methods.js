@@ -9,15 +9,18 @@ export default {
 
     applicationRoute.reopen({
       _actions: {
-        renderModal: function(modalOptions) {
-          var defaultOptions = {
-            controller: modalOptions.get('controllerName'), // Default
+        renderModal: function(options) {
+          options.setProperties({
+            controller: defaultFor(
+              options.get('controllerName'),
+              this.get('controller.currentRouteName')
+            ),
             into: 'application',
             outlet: 'modal', // Should be an addon option
             view: 'modal',
-          };
+          });
 
-          this.render(modalOptions.get('templateName'), defaultOptions); // Needs an object merge
+          this.render(options.get('templateName'), options);
         },
 
         removeModal: function() {
@@ -30,32 +33,28 @@ export default {
     });
 
     Em.ControllerMixin.reopen({
-
       needs: ['modal'],
       modal: Em.computed.alias('controllers.modal'),
 
-      showModal: function(templateNameOrOptions) {
-        var modalOptions = {};
-        var currentControllerName;
+      showModal: function(options) {
+        var modalOptions = {
+          controllerName: null,
+          model: null,
+          templateName: null
+        };
 
         /* If options are passed together as a single object... */
 
-        if (typeof templateNameOrOptions === 'string') {
-          modalOptions.templateName = templateNameOrOptions;
+        if (typeof options === 'string') {
+          modalOptions.templateName = options;
         } else {
-          modalOptions.templateName = templateNameOrOptions['template'];
-          modalOptions.controllerName = templateNameOrOptions['controller'];
-          modalOptions.model = templateNameOrOptions['model'];
+          modalOptions.templateName = options['template'];
+          modalOptions.controllerName = options['controller'];
+          modalOptions.model = options['model'];
         }
 
         // Now check to see if we have a templateName
         Em.assert('You must pass a templateName with the showModal action', modalOptions.templateName);
-
-        if (!modalOptions.controllerName) {
-          currentControllerName = this.get('constructor').toString().split(':').objectAt(1);
-
-          modalOptions.controllerName = currentControllerName;
-        }
 
         for (var option in modalOptions) {
           this.set('modal.' + option, modalOptions[option]);

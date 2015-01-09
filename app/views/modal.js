@@ -1,3 +1,3 @@
-import ModalView from 'ember-cli-modals/views/modal';
+import ModalView from 'ember-modals/views/modal';
 
 export default ModalView;

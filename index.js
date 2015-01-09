@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-cli-modals',
+  name: 'ember-modals',
   modalOptions: {},
 
   included: function(app) {

@@ -4,9 +4,6 @@
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 var app = new EmberAddon({
-  contentSecurityPolicy: {
-    'style-src': "'self' 'unsafe-inline'"
-  },
   modals: {
     defaultOutlet: 'moodal'
   }
