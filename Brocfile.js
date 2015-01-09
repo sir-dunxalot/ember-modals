@@ -5,7 +5,8 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 var app = new EmberAddon({
   modals: {
-    defaultOutlet: 'moodal'
+    layout: true,
+    style: true
   }
 });
 

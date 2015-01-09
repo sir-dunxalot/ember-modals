@@ -3,10 +3,17 @@
 
 module.exports = {
   name: 'ember-modals',
-  modalOptions: {},
 
   included: function(app) {
-    var modalOptions = app.options.modals;
+    var options = app.options.modals;
+
+    if (options.layout) {
+      app.import('vendor/styles/layout.css');
+    }
+
+    if (options.style) {
+      app.import('vendor/styles/style.css');
+    }
 
     // app.registry.add('js', modalOptions);
     // console.log(app.container); // HERE - need to register options

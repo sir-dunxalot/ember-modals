@@ -1,0 +1,88 @@
+.overlay, .modal {
+
+  /* Force Hardware Acceleration in WebKit */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  pointer-events: none;
+  transition: opacity 0.5s;
+  opacity: 0;
+
+  will-change: opacity;
+}
+
+.overlay.visible, .visible .modal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.85);
+}
+
+.overlay.visible {
+}
+
+.modal_wrapper {
+  padding: 20px;
+}
+
+.modal {
+  background-color: white;
+  max-width: 600px;
+  padding: 40px;
+  transition: opacity 1.5s;
+  border-bottom: 2px solid #bbb;
+  box-shadow: 0 3px 10px 2px rgba(0,0,0,0.5);
+}
+
+.visible .modal {
+  opacity: 1;
+}
+
+.icon-close {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 0.5;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.close:hover .icon-close {
+  color: #000000;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: pointer;
+}
+
+.modal .hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.modal button {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+
+  font-family: inherit;
+  font-weight: inherit;
+  text-rendering: inherit;
+  -webkit-font-smoothing: inherit;
+  font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+}
