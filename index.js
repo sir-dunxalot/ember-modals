@@ -9,15 +9,21 @@ module.exports = {
     var animation = options.animation;
 
     if (options.layout) {
-      app.import('vendor/styles/layout.css');
+      app.import('vendor/styles/layout.css', {
+        prepend: true,
+      });
     }
 
     if (options.style) {
-      app.import('vendor/styles/style.css');
+      app.import('vendor/styles/style.css', {
+        prepend: true,
+      });
     }
 
     if (animation) {
-      app.import('vendor/styles/animations/' + animation + '.css');
+      app.import('vendor/styles/animations/' + animation + '.css', {
+        prepend: true
+      });
     }
 
     // app.registry.add('js', modalOptions);

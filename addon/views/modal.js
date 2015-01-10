@@ -9,7 +9,7 @@ export default Em.View.extend(
   layoutName: 'modal',
   visible: false,
   overlayClassName: 'overlay',
-  transitionTime: Em.computed.alias('controller.modal.transitionDuration'),
+  transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
 
   ariaHidden: ifElse('visible', 'false', 'true'),
 
@@ -29,7 +29,7 @@ export default Em.View.extend(
     }
   }.on('didInsertElement'),
 
-  setTransitionTime: function() {
+  setTransitionDuration: function() {
     var modal = this.$('.modal');
     var ms = parseFloat(modal.css('transition-duration')) * 1000;
 
