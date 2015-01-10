@@ -1,30 +1,5 @@
-.overlay[aria-hidden], [aria-hidden] .modal {
-  transition: opacity 0.5s;
-  opacity: 0;
-
-  will-change: opacity;
-}
-
-.overlay[aria-hidden="true"], [aria-hidden="true"] .modal {
-
-  /* Force Hardware Acceleration in WebKit */
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-
-  pointer-events: none;
-}
-
-.overlay[aria-hidden="false"], [aria-hidden="false"] .modal {
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .overlay {
   background: rgba(0,0,0,0.85);
-}
-
-.overlay.visible {
 }
 
 .modal_wrapper {
@@ -36,13 +11,8 @@
   background-color: white;
   max-width: 600px;
   padding: 40px;
-  transition: opacity 1.5s;
   border-bottom: 2px solid #bbb;
   box-shadow: 0 3px 20px 2px rgba(0,0,0,0.5);
-}
-
-.visible .modal {
-  opacity: 1;
 }
 
 .overlay button {

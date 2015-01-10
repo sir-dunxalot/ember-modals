@@ -6,7 +6,8 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 var app = new EmberAddon({
   modals: {
     layout: true,
-    style: true
+    style: true,
+    animation: 'fade-and-scale'
   }
 });
 

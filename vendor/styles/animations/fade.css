@@ -1,0 +1,20 @@
+.overlay[aria-hidden],
+.overlay[aria-hidden] .modal {
+  transition: opacity 0.5s;
+  opacity: 0;
+
+  will-change: opacity;
+
+  /* Force Hardware Acceleration in WebKit */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  pointer-events: none;
+}
+
+.overlay[aria-hidden="false"],
+.overlay[aria-hidden="false"] .modal {
+  opacity: 1;
+  pointer-events: auto;
+}

@@ -6,6 +6,7 @@ module.exports = {
 
   included: function(app) {
     var options = app.options.modals;
+    var animation = options.animation;
 
     if (options.layout) {
       app.import('vendor/styles/layout.css');
@@ -13,6 +14,10 @@ module.exports = {
 
     if (options.style) {
       app.import('vendor/styles/style.css');
+    }
+
+    if (animation) {
+      app.import('vendor/styles/animations/' + animation + '.css');
     }
 
     // app.registry.add('js', modalOptions);
