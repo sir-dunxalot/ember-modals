@@ -45,7 +45,6 @@
   line-height: 0.5;
   text-shadow: 0 1px 0 #ffffff;
   text-decoration: none;
-
 }
 
 .modal .close {
@@ -71,13 +70,13 @@
   width: 1px;
 }
 
-.overlay[aria-hidden="false"],
-.overlay[aria-hidden="false"] .modal {
+.overlay[aria-hidden="true"],
+.overlay[aria-hidden="true"] .modal {
   pointer-events: none;
 }
 
 
-.overlay[aria-hidden="true"],
-.overlay[aria-hidden="true"] .modal {
+.overlay[aria-hidden="false"],
+.overlay[aria-hidden="false"] .modal {
   pointer-events: auto;
 }

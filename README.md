@@ -1,28 +1,27 @@
-# Ember-cli-modals
+# Ember Modals
 
-This README outlines the details of collaborating on this Ember addon.
+`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. Basic stylesheets and animations are included and may be optionally imported. However, the primary purpose of this addon is to manage modal functionality whilst allowing you to focus on styling and content.
+
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```
+npm install --save-dev ember-modals
+```
 
-## Running
+And then add the modal outlet to your application template:
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+```
+// templates/application.hbs
+{{outlet 'modal'}}
+```
 
-## Running Tests
+Advanced setup instructions can be found in the [documentation](https://github.com/sir-dunxalot/ember-modals/wiki).
 
-* `ember test`
-* `ember test --server`
 
-## Building
+## Documentation
 
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+Documentation, including setup, options, and styleguides, can be found in [the wiki](https://github.com/sir-dunxalot/ember-modals/wiki).
 
 
 ## TODO
@@ -30,3 +29,8 @@ For more information on using ember-cli, visit [http://www.ember-cli.com/](http:
 WAI-ARIA
 aria-haspopup for buttons
 aria-label or aria-labelledby for modal
+https://github.com/codrops/ModalWindowEffects
+Reset modal properties method
+Isolate more things that should be private
+
+https://github.com/sir-dunxalot/ember-modals.wiki.git
