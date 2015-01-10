@@ -1,22 +1,19 @@
 .overlay[aria-hidden],
 .overlay[aria-hidden] .modal {
+  -webkit-transition: opacity 0.5s, -webkit-transform 0.7s;
+  -moz-transition: opacity 0.5s, -moz-transform 0.7s;
   transition: opacity 0.5s, transform 0.7s;
   opacity: 0;
 
-  will-change: opacity;
-
-  /* Force Hardware Acceleration in WebKit */
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-
-  pointer-events: none;
+  will-change: opacity;
 }
 
 .overlay[aria-hidden="false"],
 .overlay[aria-hidden="false"] .modal {
   opacity: 1;
-  pointer-events: auto;
 }
 
 .overlay[aria-hidden="true"] .modal {

@@ -70,3 +70,14 @@
   position: absolute;
   width: 1px;
 }
+
+.overlay[aria-hidden="false"],
+.overlay[aria-hidden="false"] .modal {
+  pointer-events: none;
+}
+
+
+.overlay[aria-hidden="true"],
+.overlay[aria-hidden="true"] .modal {
+  pointer-events: auto;
+}
