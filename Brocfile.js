@@ -7,7 +7,7 @@ var app = new EmberAddon({
   modals: {
     layout: true,
     style: true,
-    animation: 'fade-and-scale'
+    animation: 'flip'
   }
 });
 

@@ -1,0 +1,34 @@
+.overlay[aria-hidden],
+.overlay[aria-hidden] .modal {
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 0;
+
+  will-change: opacity;
+
+  /* Force Hardware Acceleration in WebKit */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  pointer-events: none;
+}
+
+.overlay[aria-hidden="false"],
+.overlay[aria-hidden="false"] .modal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay[aria-hidden="true"] .modal {
+  -webkit-transform: translateY(-50px);
+  -moz-transform: translateY(-50px);
+  -ms-transform: translateY(-50px);
+  transform: translateY(-50px);
+}
+
+.overlay[aria-hidden="false"] .modal {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}

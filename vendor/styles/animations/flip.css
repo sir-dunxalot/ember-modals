@@ -1,0 +1,48 @@
+.overlay[aria-hidden],
+.overlay[aria-hidden] .modal {
+  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+  -moz-transition: opacity 0.5s, -moz-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 0;
+
+  will-change: opacity;
+
+  /* Force Hardware Acceleration in WebKit */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  pointer-events: none;
+}
+
+.overlay {
+  -webkit-perspective: 1500px;
+  -moz-perspective: 1500px;
+  perspective: 1500px;
+}
+
+.overlay[aria-hidden] .modal {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.overlay[aria-hidden="false"],
+.overlay[aria-hidden="false"] .modal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay[aria-hidden="true"] .modal {
+  -webkit-transform: rotateY(-70deg);
+  -moz-transform: rotateY(-70deg);
+  -ms-transform: rotateY(-70deg);
+  transform: rotateY(-70deg);
+}
+
+.overlay[aria-hidden="false"] .modal {
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+}
