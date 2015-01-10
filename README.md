@@ -1,6 +1,6 @@
 # Ember Modals
 
-`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. Basic stylesheets and animations are included and may be optionally imported. However, the primary purpose of this addon is to manage modal functionality whilst allowing you to focus on styling and content.
+`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. The primary purpose of this addon is to manage modal functionality in your JS whilst getting out of the way for styling and templating, allowing you to match your styleguide and mockups precisely. However, basic stylesheets and animations are included and may be optionally imported.
 
 ```
 npm install --save-dev ember-modals
@@ -8,16 +8,17 @@ npm install --save-dev ember-modals
 
 ## Documentation
 
-Documentation, including setup, options, and styleguides, can be found in [the wiki](https://github.com/sir-dunxalot/ember-modals/wiki).
+Documentation, including setup, usage, customization, and styling/animating, can be found in [the wiki](https://github.com/sir-dunxalot/ember-modals/wiki).
 
 
-## TODO
+## Issues
 
-WAI-ARIA
-aria-haspopup for buttons
-aria-label or aria-labelledby for modal
-https://github.com/codrops/ModalWindowEffects
-Reset modal properties method
-Isolate more things that should be private
+If you have any issues or feature requests, please [open an issue](https://github.com/sir-dunxalot/ember-modals/issues/new) or submit a PR.
 
-https://github.com/sir-dunxalot/ember-modals.wiki.git
+
+## Features in The Works
+
+- Improved WAI-ARIA support and documentation (aria-haspopup for buttons and aria-label for modals)
+- Expose a `resetModal()` method to reset default properties
+- Test suite
+- More Browser support for included stylesheets
