@@ -1,3 +1,4 @@
+import Em from 'ember';
 import resolver from './helpers/resolver';
 import {
   setResolver
@@ -10,15 +11,18 @@ document.write('<div id="ember-testing-container"><div id="ember-testing"></div>
 QUnit.extend(QUnit, {
 
   contains: function(array, item, message) {
+    Em.assert('QUnit.contains\' first argument must be an array',
+      Em.typeOf(array) === 'array');
+
     ok(array.indexOf(item) > -1, message);
   },
 
   isFunction: function(name, message) {
-    equal(typeof name, 'function', message);
+    equal(Em.typeOf(name), 'function', message);
   },
 
   typeOf: function(name, type, message) {
-    equal(typeof name, type, message);
+    equal(Em.typeOf(name), type, message);
   },
 
 });
