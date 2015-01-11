@@ -4,7 +4,7 @@ import defaultFor from '../utils/default-for';
 export default {
   name: 'addModalMethods',
 
-  initialize: function(container, app) {
+  initialize: function (container, app) {
     var applicationRoute = container.lookup('route:application');
 
     applicationRoute.reopen({

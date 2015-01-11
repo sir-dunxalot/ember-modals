@@ -23,3 +23,4 @@ If you have any issues or feature requests, please [open an issue](https://githu
 - Expose a `resetModal()` method to reset default properties
 - Test suite
 - More Browser support for included stylesheets
+- Modal view to use one instead of on?
