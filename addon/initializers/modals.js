@@ -34,10 +34,10 @@ export function initialize(container, app) {
             parentView: 'application',
           });
         }
-      }
+      },
     });
   } else {
-    Em.warn('Application route was not found so it\'s action hash was not reopened');
+    Em.warn('Application route was not found so it\'s action hash was not reopened. If you are in a unit test you can ignore this warning.');
   }
 
   Em.ControllerMixin.reopen({

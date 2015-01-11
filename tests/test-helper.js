@@ -10,11 +10,11 @@ document.write('<div id="ember-testing-container"><div id="ember-testing"></div>
 
 QUnit.extend(QUnit, {
 
-  contains: function(array, item, message) {
-    Em.assert('QUnit.contains\' first argument must be an array',
-      Em.typeOf(array) === 'array');
+  contains: function(arrayOrString, item, message) {
+    Em.assert('QUnit.contains\' first argument must be an array or string',
+      arrayOrString.indexOf);
 
-    ok(array.indexOf(item) > -1, message);
+    ok(arrayOrString.indexOf(item) > -1, message);
   },
 
   isFunction: function(name, message) {
