@@ -27,7 +27,7 @@ export default Em.View.extend(
     if (inputs.length) {
       inputs[0].focus();
     }
-  }.on('didInsertElement'),
+  },
 
   setTransitionDuration: function() {
     var modal = this.$('.modal');
@@ -46,8 +46,9 @@ export default Em.View.extend(
     });
   }.on('willInsertElement'),
 
-  _willShow: function() {
+  setup: function() {
     this.show();
+    this.autofocus();
   }.on('didInsertElement'),
 
 });

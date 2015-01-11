@@ -28,6 +28,7 @@
     "moduleForComponent",
     "moduleForModel",
     "process",
+    "propEqual",
     "expect",
     "visit",
     "exists",
