@@ -24,7 +24,7 @@ test('Default modal layout', function() {
   var templateName = 'test-modal';
   var viewConstructor = container.lookup('view:modal');
 
-  expect(10);
+  expect(11);
 
   visit('/');
 
@@ -67,6 +67,9 @@ test('Default modal layout', function() {
 
       ok(inspect('content', false),
         'Modal element should be rendered in modal layout');
+
+      equal(inspect('content').attr('role'), 'dialog',
+        'Modal element should have role="dialog"');
 
       ok(modal.hasClass('modal'),
         'Modal should have class of modal');

@@ -26,7 +26,7 @@ export default Em.View.extend(
   },
 
   setTransitionDuration: function() {
-    var modal = this.$('.modal');
+    var modal = this.$('[role="dialog"]');
     var ms = parseFloat(modal.css('transition-duration')) * 1000;
 
     if (ms) {
