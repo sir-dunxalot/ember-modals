@@ -4,23 +4,14 @@ import ifElse from 'ember-modals/utils/computed/if-else';
 export default Em.View.extend(
   Em.Evented, {
 
+  ariaHidden: ifElse('visible', 'false', 'true'),
   attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test'],
   classNameBindings: ['overlayClassName', 'visible'],
   dataTest: 'modal-overlay',
   layoutName: 'modal',
-  visible: false,
   overlayClassName: 'overlay',
   transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
-
-  ariaHidden: ifElse('visible', 'false', 'true'),
-
-  show: function() {
-    this.set('visible', true);
-  },
-
-  hide: function() {
-    this.set('visible', false);
-  },
+  visible: false,
 
   autofocus: function() {
     var inputs = this.$().find('input');
@@ -28,6 +19,10 @@ export default Em.View.extend(
     if (inputs.length) {
       inputs[0].focus();
     }
+  },
+
+  hide: function() {
+    this.set('visible', false);
   },
 
   setTransitionDuration: function() {
@@ -39,6 +34,15 @@ export default Em.View.extend(
     }
   }.on('didInsertElement'),
 
+  setup: function() {
+    this.show();
+    this.autofocus();
+  }.on('didInsertElement'),
+
+  show: function() {
+    this.set('visible', true);
+  },
+
   _listen: function() {
     this.get('controller.modal').on('closeModal', this, function() {
       if (!this.get('isDestroying')) {
@@ -46,10 +50,5 @@ export default Em.View.extend(
       }
     });
   }.on('willInsertElement'),
-
-  setup: function() {
-    this.show();
-    this.autofocus();
-  }.on('didInsertElement'),
 
 });

@@ -172,8 +172,10 @@ test('Close button', function() {
       click(closeButton);
 
       andThen(function() {
+
         ok(!inspect('close', false),
-          'Close button should remove modal layout from DOM');
+          'Clicking the close button should remove modal layout from DOM');
+
       });
     });
   });

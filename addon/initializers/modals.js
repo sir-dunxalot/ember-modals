@@ -41,8 +41,8 @@ export function initialize(container, app) {
   }
 
   Em.ControllerMixin.reopen({
-    needs: ['modal'],
     modal: Em.computed.alias('controllers.modal'),
+    needs: ['modal'],
 
     _actions: {
       closeModal: function() {
