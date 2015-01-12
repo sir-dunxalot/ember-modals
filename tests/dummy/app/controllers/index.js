@@ -40,6 +40,10 @@ export default Em.ObjectController.extend({
       this.showModal();
     },
 
+    showModalSix: function() {
+      this.showModal(template + '-two');
+    },
+
   }
 
 });

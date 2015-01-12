@@ -4,8 +4,9 @@ import ifElse from 'ember-modals/utils/computed/if-else';
 export default Em.View.extend(
   Em.Evented, {
 
-  attributeBindings: ['ariaHidden:aria-hidden', 'aria-label'],
+  attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test'],
   classNameBindings: ['overlayClassName', 'visible'],
+  dataTest: 'modal-overlay',
   layoutName: 'modal',
   visible: false,
   overlayClassName: 'overlay',

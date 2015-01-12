@@ -22,11 +22,11 @@ var disconnectOutlet = function(options) {
   actionArguments = {
     options: options
   };
-}
+};
 
 var handleAction = function() {
   actionHandled = true;
-}
+};
 
 var resetAction = function() {
   actionHandled = false;
@@ -59,8 +59,8 @@ test('Application route', function() {
 
   andThen(function() {
 
-    /* Overwrite the functions called in the actions so we can
-    test if the action is called successfully */
+    /* Override methods we know the application route's actions
+    will call so we can test whether or not they get called */
 
     route.setProperties({
       render: render,
@@ -148,7 +148,7 @@ var showTests = function() {
   ok(actionArguments.templateName && actionArguments.options,
     'showModal shound send options to renderModal in the application route');
 
-}
+};
 
 
 var closeTests = function(modal) {
@@ -176,7 +176,7 @@ var closeTests = function(modal) {
     }, transitionDuration + 100);
   });
 
-}
+};
 
 test('Action routing', function() {
   var controller = container.lookup('controller:index');
@@ -191,6 +191,9 @@ test('Action routing', function() {
 
   andThen(function() {
 
+    /* Override methods we know the application route's actions
+    will call so we can test whether or not they get called */
+
     applicationRoute.setProperties({
       render: render,
       disconnectOutlet: disconnectOutlet
@@ -198,10 +201,10 @@ test('Action routing', function() {
 
     /* Test by calling modal methods directly */
 
-    modal.set('templateName', templateName)
+    modal.set('templateName', templateName);
     modal.show();
 
-    showTests()
+    showTests();
     resetAction();
 
     modal.hide();
@@ -209,7 +212,7 @@ test('Action routing', function() {
     closeTests(modal).then(function() {
       resetAction();
 
-      /* Test via action on regular controller */
+      /* Then test via action on regular controller */
 
       controller.showModal(templateName);
 
@@ -221,5 +224,50 @@ test('Action routing', function() {
       closeTests(modal);
     });
 
+  });
+});
+
+
+test('Default controller - string argument', function() {
+
+  visit('array-controller');
+
+  andThen(function() {
+    var routeName = currentRouteName();
+    var controller = container.lookup('controller:' + routeName);
+
+    /* Argument as string */
+
+    controller.showModal('test-modal');
+
+    Em.run.next(function() {
+      var constructor = controller.get('constructor').toString();
+
+      equal(inspect('controller_constructor').text(), constructor,
+        'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
+    });
+  });
+
+});
+
+
+test('Default controller - object argument', function() {
+
+  visit('array-controller');
+
+  andThen(function() {
+    var routeName = currentRouteName();
+    var controller = container.lookup('controller:' + routeName);
+
+    controller.showModal({
+      template: 'test-modal',
+    });
+
+    Em.run.next(function() {
+      var constructor = controller.get('constructor').toString();
+
+      equal(inspect('controller_constructor').text(), constructor,
+        'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
+    });
   });
 });
