@@ -28,6 +28,7 @@
     "moduleForComponent",
     "moduleForModel",
     "process",
+    "propEqual",
     "expect",
     "visit",
     "exists",
@@ -44,7 +45,8 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "inspect"
   ],
   "node": false,
   "browser": false,

@@ -19,16 +19,16 @@ export default Em.ObjectController.extend(
     });
   }.property('controllerName', 'outlet', 'templateName', 'viewName'),
 
-  show: function() {
-    this.send('renderModal', this.get('_options'));
-  },
-
   hide: function() {
     this.trigger('closeModal');
 
     Em.run.later(this, function() {
       this.send('removeModal', this.get('_options'));
     }, this.get('transitionDuration'));
+  },
+
+  show: function() {
+    this.send('renderModal', this.get('_options'));
   },
 
 });
