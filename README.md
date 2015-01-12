@@ -17,10 +17,10 @@ Documentation, including setup, usage, customization, and styling/animating, can
 If you have any issues or feature requests, please [open an issue](https://github.com/sir-dunxalot/ember-modals/issues/new) or submit a PR.
 
 
-## Features in The Works
+## TODO - Features and Improvements
 
 - Improved WAI-ARIA support and documentation (aria-haspopup for buttons and aria-label for modals)
 - Expose a `resetModal()` method to reset default properties
-- Test suite
 - More Browser support for included stylesheets
-- Modal view to use one instead of on?
+- Modal view to use `one()` instead of `on()`
+- Test(s) for animation duration of modals
