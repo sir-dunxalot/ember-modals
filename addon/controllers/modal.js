@@ -43,7 +43,7 @@ export default Em.ObjectController.extend(
         this.get('defaultOutlet')
       ),
       into: defaultFor(
-        renderingOptions.parentViewName,
+        renderingOptions.parentView,
         this.get('defaultParentViewName')
       ),
       view: defaultFor(

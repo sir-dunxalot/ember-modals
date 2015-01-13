@@ -1,0 +1,49 @@
+<ol>
+  <li>
+    <button {{action 'showModalOne'}}>
+      Show modal
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalTwo'}}>
+      Show modal with controller
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalThree'}}>
+      Show modal with model
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalFour'}}>
+      Show modal with controller and model
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalFive'}}>
+      Show modal with no template
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalSix'}}>
+      Show modal with different template
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalSeven'}}>
+      Show modal with different outlet
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalEight'}}>
+      Show modal with different outlet and parentView
+    </button>
+  </li>
+  <li>
+    <button {{action 'showModalNine'}}>
+      Show modal with different parentView
+    </button>
+  </li>
+</ol>
+
+{{outlet 'modal-on-route'}}

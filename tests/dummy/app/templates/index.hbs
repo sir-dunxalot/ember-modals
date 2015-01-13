@@ -1,36 +1,6 @@
 <h2>Object Controller</h2>
 
-<ul>
-  <li>
-    <button {{action 'showModalOne'}}>
-      Show modal
-    </button>
-  </li>
-  <li>
-    <button {{action 'showModalTwo'}}>
-      Show modal with controller
-    </button>
-  </li>
-  <li>
-    <button {{action 'showModalThree'}}>
-      Show modal with model
-    </button>
-  </li>
-  <li>
-    <button {{action 'showModalFour'}}>
-      Show modal with controller and model
-    </button>
-  </li>
-  <li>
-    <button {{action 'showModalFive'}}>
-      Show modal with no template
-    </button>
-  </li>
-  <li>
-    <button {{action 'showModalSix'}}>
-      Show modal with different template
-    </button>
-  </li>
-</ul>
+{{partial 'buttons'}}
 
-{{outlet 'modal-index'}}
+{{!-- Just used for #9 --}}
+{{outlet 'modal'}}
