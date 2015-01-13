@@ -12,8 +12,15 @@ export function initialize(container, app) {
 
   if (applicationRoute) {
     applicationRoute.reopen({
+
+      /* You shouldn't need to call these aciton directly. Use
+      show() and hide() on the modal controller */
+
       _actions: {
         renderModal: function(options) {
+          var templateName = options.template;
+
+          delete options.template;
 
           /* Default to route's controller */
 
@@ -22,7 +29,7 @@ export function initialize(container, app) {
             this.get('controller.currentRouteName')
           );
 
-          this.render(options.templateName, options);
+          this.render(templateName, options);
         },
 
         removeModal: function(outlet, parentViewName) {
@@ -42,12 +49,12 @@ export function initialize(container, app) {
     needs: ['modal'],
 
     _actions: {
-      closeModal: function() {
-        this.get('modal').hide();
+      closeModal: function(outlet) {
+        this.get('modal').hide(outlet);
       }
     },
 
-    showModal: function(options) {
+    showModal: function(options, renderingOptions) {
       var modal = this.get('modal');
 
       Em.assert('You can\'t show a modal without a template name',
@@ -55,17 +62,21 @@ export function initialize(container, app) {
 
       /* If options are passed together as a single object... */
 
-      if (typeof options === 'string') {
+      if (Em.typeOf(options) === 'string') {
         modal.set('templateName', options);
       } else {
         modal.set('templateName', options['template']);
       }
 
+      /* Sets value to undefined if they're not set */
+
       modal.set('controllerName', options['controller']);
       modal.set('model', options['model']);
       modal.set('viewName', options['view']);
 
-      this.get('modal').show();
+      /* Auto-call the show function to do rendering */
+
+      this.get('modal').show(renderingOptions);
     }
 
   });

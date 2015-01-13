@@ -32,16 +32,18 @@ export default Em.ObjectController.extend(
     }, this.get('transitionDuration'));
   },
 
-  show: function(outlet, parentViewName) {
+  show: function(renderingOptions) {
+    renderingOptions = defaultFor(renderingOptions, {});
+
     var options = {
       controller: this.get('controllerName'),
-      templateName: this.get('templateName'),
+      template: this.get('templateName'),
       outlet: defaultFor(
-        outlet,
+        renderingOptions.outlet,
         this.get('defaultOutlet')
       ),
       into: defaultFor(
-        parentViewName,
+        renderingOptions.parentViewName,
         this.get('defaultParentViewName')
       ),
       view: defaultFor(
@@ -55,7 +57,7 @@ export default Em.ObjectController.extend(
     view later */
 
     this.set('_previousRelationships.' + options.outlet,
-      options.parentViewName);
+      options.into);
 
     this.send('renderModal', options);
   },
