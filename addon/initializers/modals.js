@@ -10,28 +10,25 @@ export default {
 export function initialize(container, app) {
   var applicationRoute = container.lookup('route:application');
 
-  /* Use if statement to allow unit tests to work */
-
   if (applicationRoute) {
     applicationRoute.reopen({
       _actions: {
         renderModal: function(options) {
-          options.setProperties({
-            controller: defaultFor(
-              options.get('controllerName'),
-              this.get('controller.currentRouteName')
-            ),
-            into: 'application',
-            view: options.get('viewName')
-          });
 
-          this.render(options.get('templateName'), options);
+          /* Default to route's controller */
+
+          options.controller = defaultFor(
+            options.controller,
+            this.get('controller.currentRouteName')
+          );
+
+          this.render(options.template, options);
         },
 
-        removeModal: function(options) {
+        removeModal: function(outlet, parentViewName) {
           this.disconnectOutlet({
-            outlet: options.get('outlet'),
-            parentView: 'application',
+            outlet: outlet,
+            parentView: parentViewName
           });
         }
       },
@@ -51,27 +48,22 @@ export function initialize(container, app) {
     },
 
     showModal: function(options) {
-      var modalOptions = {
-        controllerName: null,
-        model: null,
-        templateName: null
-      };
+      var modal = this.get('modal');
+
+      Em.assert('You can\'t show a modal without a template name',
+        options || this.get('templateName'));
 
       /* If options are passed together as a single object... */
 
       if (typeof options === 'string') {
-        modalOptions.templateName = options;
+        modal.set('templateName', options);
       } else {
-        Em.assert('You must pass a templateName to the showModal method', options['template']);
-
-        modalOptions.templateName = options['template'];
-        modalOptions.controllerName = options['controller'];
-        modalOptions.model = options['model'];
+        modal.set('templateName', options['template']);
       }
 
-      for (var option in modalOptions) {
-        this.set('modal.' + option, modalOptions[option]);
-      }
+      modal.set('controllerName', options['controller']);
+      modal.set('model', options['model']);
+      modal.set('viewName', options['viewName']);
 
       this.get('modal').show();
     }
