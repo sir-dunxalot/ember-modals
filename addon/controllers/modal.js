@@ -20,14 +20,12 @@ export default Em.ObjectController.extend(
 
 
   hide: function(outlet) {
+    var parentViewName;
+
     this.trigger('closeModal'); // Start close animation
 
-    outlet = defaultFor(
-      outlet,
-      this.get('defaultOutlet')
-    );
-
-    parentViewName = this.get('_cachedRelationships.' + outlet);
+    outlet = defaultFor(outlet, this.get('defaultOutlet'));
+    parentViewName = this.get('_previousRelationships.' + outlet);
 
     Em.run.later(this, function() {
       this.send('removeModal', outlet, parentViewName);
@@ -37,7 +35,7 @@ export default Em.ObjectController.extend(
   show: function(outlet, parentViewName) {
     var options = {
       controller: this.get('controllerName'),
-      template: this.get('templateName'),
+      templateName: this.get('templateName'),
       outlet: defaultFor(
         outlet,
         this.get('defaultOutlet')
@@ -56,12 +54,12 @@ export default Em.ObjectController.extend(
     parent view so we can easily hide outlets in a route's
     view later */
 
-    this.set('_cachedRelationships.' + options.outlet,
+    this.set('_previousRelationships.' + options.outlet,
       options.parentViewName);
 
     this.send('renderModal', options);
   },
 
-  _cachedRelationships: Em.Object.create(),
+  _previousRelationships: Em.Object.create(),
 
 });

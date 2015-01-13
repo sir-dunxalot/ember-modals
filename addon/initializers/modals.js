@@ -22,7 +22,7 @@ export function initialize(container, app) {
             this.get('controller.currentRouteName')
           );
 
-          this.render(options.template, options);
+          this.render(options.templateName, options);
         },
 
         removeModal: function(outlet, parentViewName) {
@@ -63,7 +63,7 @@ export function initialize(container, app) {
 
       modal.set('controllerName', options['controller']);
       modal.set('model', options['model']);
-      modal.set('viewName', options['viewName']);
+      modal.set('viewName', options['view']);
 
       this.get('modal').show();
     }

@@ -37,6 +37,7 @@ export default Em.View.extend(
   setup: function() {
     this.show();
     this.autofocus();
+    console.log(this.$());
   }.on('didInsertElement'),
 
   show: function() {
