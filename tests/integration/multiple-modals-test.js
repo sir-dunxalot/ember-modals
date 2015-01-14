@@ -31,15 +31,16 @@ module('Modals - Using multiple modals', {
 });
 
 
-test('Changing between outlets', function() {
+test('Changing between outlets on the same route', function() {
   var options = {
     template: 'modals/modal-one'
   };
 
   var renderingOptions = {
-    outlet: 'modal-on-index',
-    parentView: 'index'
+    outlet: 'modal-two'
   }
+
+  expect(12);
 
   visit('/');
 
@@ -55,5 +56,80 @@ test('Changing between outlets', function() {
 
   andThen(function() {
     testModal(options, renderingOptions);
+  });
+});
+
+
+test('Changing between outlets on different views', function() {
+  var options = {
+    template: 'modals/modal-one'
+  };
+
+  var renderingOptions = {
+    outlet: 'modal-on-index',
+    parentView: 'index'
+  }
+
+  expect(12);
+
+  visit('/');
+
+  showModal(options);
+
+  andThen(function() {
+    testModal(options);
+  });
+
+  asyncClick('close');
+
+  showModal(options, renderingOptions);
+
+  andThen(function() {
+    testModal(options, renderingOptions);
+  });
+});
+
+
+test('Showing two modals at the same time', function() {
+  var options = {
+    template: 'modals/modal-one'
+  };
+
+  var optionsAlt = {
+    template: 'modals/modal-two'
+  }
+
+  var renderingOptions = {
+    outlet: 'modal-on-index',
+    parentView: 'index'
+  }
+
+  expect(19);
+
+  visit('/');
+
+  showModal(options);
+
+  andThen(function() {
+    testModal(options);
+  });
+
+  showModal(optionsAlt, renderingOptions);
+
+  andThen(function() {
+    testModal(optionsAlt, renderingOptions);
+  });
+
+  asyncClick('close');
+
+  andThen(function() {
+
+    ok(inspect('close', false),
+      'Should still be one close button in the DOM');
+
+    /* Original modal should still be in the DOM */
+
+    testModal(options);
+
   });
 });
