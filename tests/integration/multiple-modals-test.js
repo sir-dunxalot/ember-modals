@@ -38,7 +38,7 @@ test('Changing between outlets on the same route', function() {
 
   var renderingOptions = {
     outlet: 'modal-two'
-  }
+  };
 
   expect(12);
 
@@ -68,7 +68,7 @@ test('Changing between outlets on different views', function() {
   var renderingOptions = {
     outlet: 'modal-on-index',
     parentView: 'index'
-  }
+  };
 
   expect(12);
 
@@ -97,12 +97,12 @@ test('Showing two modals at the same time', function() {
 
   var optionsAlt = {
     template: 'modals/modal-two'
-  }
+  };
 
   var renderingOptions = {
     outlet: 'modal-on-index',
     parentView: 'index'
-  }
+  };
 
   expect(19);
 

@@ -21,7 +21,7 @@ export function testModal(options, renderingOptions) {
 
   checkOutlet(renderingOptions.outlet);
   checkParentView(renderingOptions.parentView);
-};
+}
 
 /* Each of the below methods checks the given component of the
 modal. If an option is passed, it checks that the given option
@@ -38,7 +38,7 @@ export function checkTemplate(name) {
   equal(inspect('template_name').text().trim(), expectedName,
     'Modal should have the ' + text + ' template');
 
-};
+}
 
 export function checkView(name) {
   var expectedName;
@@ -49,7 +49,7 @@ export function checkView(name) {
   ok(inspect('view_constructor').text().indexOf(expectedName) > -1,
     'Modal should have the ' + name + ' view');
 
-};
+}
 
 export function checkModel(expectedModel) {
   var name;
@@ -67,7 +67,7 @@ export function checkModel(expectedModel) {
 
   }
 
-};
+}
 
 export function checkController(name) {
   var constructor = inspect('controller_constructor').text().trim();
@@ -79,7 +79,7 @@ export function checkController(name) {
   ok(constructor.indexOf(name) > -1,
     'Modal should have the ' + text + ' controller');
 
-};
+}
 
 export function checkOutlet(name) {
   name = defaultFor(name, defaultOutlet);
@@ -87,7 +87,7 @@ export function checkOutlet(name) {
   equal(inspect('outlet_name').text().trim(), name,
     'Modal should be rendered into the ' + name + ' outlet');
 
-};
+}
 
 export function checkParentView(name) {
   var actualName = inspect('parent_view_name').text().trim();
@@ -97,4 +97,4 @@ export function checkParentView(name) {
   equal(name, actualName,
     'The modal\'s outlet should have the ' + name + ' parent view');
 
-};
+}

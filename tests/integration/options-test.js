@@ -121,8 +121,8 @@ variationsToTest.forEach(function(variation) {
     description += option + ', ';
   }
 
-  for (var option in variation.renderingOptions) {
-    description += option + ', ';
+  for (var renderingOption in variation.renderingOptions) {
+    description += renderingOption + ', ';
   }
 
   /* Set the template - hackyyyyy */
