@@ -134,7 +134,7 @@ test('Custom modal model', function() {
 
   andThen(function() {
 
-    equal(inspect('model-name').text(), name,
+    equal(inspect('model-name').text().trim(), name,
       'Modal template should have access to the modal model');
 
   });

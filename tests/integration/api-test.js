@@ -146,7 +146,7 @@ test('Array controllers', function() {
 });
 
 /* We will run showTests and closeTests twice (once for actions
-and once for calling the hdie() and show() methods directly so
+and once for calling the hide() and show() methods directly) so
 we specify them as variables */
 
 var showTests = function() {
@@ -249,7 +249,7 @@ test('Default controller - string argument', function() {
     var controller = container.lookup('controller:' + routeName);
     var constructor = controller.get('constructor').toString();
 
-    equal(inspect('controller_constructor').text(), constructor,
+    equal(inspect('controller_constructor').text().trim(), constructor,
       'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
   });
@@ -270,7 +270,7 @@ test('Default controller - object argument', function() {
     var controller = container.lookup('controller:' + routeName);
     var constructor = controller.get('constructor').toString();
 
-    equal(inspect('controller_constructor').text(), constructor,
+    equal(inspect('controller_constructor').text().trim(), constructor,
       'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
   });
