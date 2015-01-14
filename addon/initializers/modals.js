@@ -56,13 +56,14 @@ export function initialize(container, app) {
 
     showModal: function(options, renderingOptions) {
       var modal = this.get('modal');
+      var optionsIsString = Em.typeOf(options) === 'string';
 
       Em.assert('You can\'t show a modal without a template name',
-        options || this.get('templateName'));
+        optionsIsString || options['template']);
 
       /* If options are passed together as a single object... */
 
-      if (Em.typeOf(options) === 'string') {
+      if (optionsIsString) {
         modal.set('templateName', options);
       } else {
         modal.set('templateName', options['template']);
