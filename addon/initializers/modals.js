@@ -61,8 +61,12 @@ export function initialize(container, app) {
       var modal = this.get('modal');
       var optionsIsString = Em.typeOf(options) === 'string';
 
-      Em.assert('You can\'t show a modal without a template name',
-        optionsIsString || options['template']);
+      if (!options) {
+        Em.assert('You must pass options or a template name to the showModal() method');
+      } else {
+        Em.assert('You can\'t show a modal without a template name',
+          optionsIsString || options['template']);
+      }
 
       /* If options are passed together as a single object... */
 

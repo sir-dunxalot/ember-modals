@@ -9,22 +9,9 @@ var contains = QUnit.contains;
 var isFunction = QUnit.isFunction;
 var typeOf = QUnit.typeOf;
 
-/* Variables - use when you want to overwrite
-the default */
-
-// var choices = {
-//   controller: 'model-one',
-//   model: {
-//     name: 'Peter Griffin',
-//   },
-//   outlet: 'modal-two',
-//   template: 'modals/modal-one',
-//   templateAlt: 'modals/modal-two',
-//   view: 'modal-two',
-
-//   parentViewAlt: 'index',
-//   outletAlt: 'modal-on-index',
-// }
+/* Variables - use when you want to overwrite the
+defaults. Each of these are reliant on real files in
+the dummy app and the files' content */
 
 var controller = 'modal-one';
 var template = 'modals/modal-one';
@@ -32,22 +19,28 @@ var templateAlt = 'modals/modal-two';
 var model = {
   name: 'Peter Griffin'
 };
-var view = 'modal-two';
-
-/* Rendering options */
-
 var outlet = 'modal-two';
-
 var outletAlt = 'modal-on-index';
 var parentViewAlt = 'index';
+var view = 'modal-two';
 
-var App, container;
+var App, container, defaultOutlet, defaultView, defaultParentView;
+
+/* Define the testing module */
 
 module('Modals - Using options with API', {
 
   setup: function() {
+    var modalController;
+
     App = startApp();
     container = App.__container__;
+
+    modalController = container.lookup('controller:modal');
+
+    defaultOutlet = modalController.get('defaultOutlet');
+    defaultView = modalController.get('defaultView');
+    defaultParentView = modalController.get('defaultParentView');
   },
 
   teardown: function() {
@@ -56,14 +49,8 @@ module('Modals - Using options with API', {
 
 });
 
-// Check changing model
-// Check rendering options
-// Get default options from modal controller
-// Add warning for no options
-
-/* Test combinations of modal options without
-rendering options. Template is automatically added
-unless otherwise defined */
+/* Set different combinations of modal options. Template
+is automatically added unless otherwise defined */
 
 var variationsToTest = [
   {
@@ -88,14 +75,34 @@ var variationsToTest = [
   }, {
     options: { template: templateAlt, view: view }
   }, {
+    route: 'array-controller',
+    options: { template: templateAlt }
+  }, {
+    route: 'array-controller',
+    options: { template: templateAlt, view: view }
+  }, {
     renderingOptions: { outlet: outlet }
   }, {
     renderingOptions: { outlet: outlet, view: view }
   }, {
     renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
+  }, {
+    options: { controller: controller },
+    renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
+  }, {
+    options: { model: model },
+    renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
+  }, {
+    options: { view: view },
+    renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
+  }, {
+    options: { controller: controller, model: model, view: view },
+    renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
   }
 
 ];
+
+/* Run the tests for each variation */
 
 variationsToTest.forEach(function(variation) {
   var description = 'Custom ';
@@ -157,6 +164,11 @@ var testModal = function(options, renderingOptions) {
   checkParentView(renderingOptions.parentView);
 };
 
+/* Each of the below methods checks the given component of the
+modal. If an option is passed, it checks that the given option
+is set on the modal. If no option is passed it checks that the
+default option is set on the modal */
+
 var checkTemplate = function(name) {
   var expectedName, text;
 
@@ -172,7 +184,7 @@ var checkTemplate = function(name) {
 var checkView = function(name) {
   var expectedName;
 
-  name = defaultFor(name, 'modal');
+  name = defaultFor(name, defaultView);
   expectedName = ':' + name + ':';
 
   ok(inspect('view_constructor').text().indexOf(expectedName) > -1,
@@ -207,20 +219,23 @@ var checkController = function(name) {
 
   ok(constructor.indexOf(name) > -1,
     'Modal should have the ' + text + ' controller');
+
 };
 
 var checkOutlet = function(name) {
-  name = defaultFor(name, 'modal');
+  name = defaultFor(name, defaultOutlet);
 
   equal(inspect('outlet_name').text().trim(), name,
     'Modal should be rendered into the ' + name + ' outlet');
+
 };
 
 var checkParentView = function(name) {
   var actualName = inspect('parent_view_name').text().trim();
 
-  name = defaultFor(name, 'application');
+  name = defaultFor(name, defaultParentView);
 
   equal(name, actualName,
     'The modal\'s outlet should have the ' + name + ' parent view');
+
 };
