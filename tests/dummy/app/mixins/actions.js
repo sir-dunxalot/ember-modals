@@ -5,8 +5,6 @@ var controller = 'modal-one';
 var model = {
   name: 'test',
 };
-var outlet = 'modal-two';
-var parentView = ''
 
 export default Em.Mixin.create({
 
@@ -56,15 +54,7 @@ export default Em.Mixin.create({
       var viewName = this.toString().split(':')[1];
 
       this.showModal(template, {
-        outlet: 'modal-on-route',
-        parentView: viewName
-      });
-    },
-
-    showModalNine: function() {
-      var viewName = this.toString().split(':')[1];
-
-      this.showModal(template, {
+        outlet: 'modal-on-' + viewName,
         parentView: viewName
       });
     }

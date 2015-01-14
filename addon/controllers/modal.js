@@ -18,7 +18,6 @@ export default Em.ObjectController.extend(
   defaultParentViewName: 'application',
   transitionDuration: 500, // Fallback from CSS value
 
-
   hide: function(outlet) {
     var parentViewName;
 
@@ -33,9 +32,12 @@ export default Em.ObjectController.extend(
   },
 
   show: function(renderingOptions) {
+    var previousRelationships = this.get('_previousRelationships');
+    var options, previousParentView;
+
     renderingOptions = defaultFor(renderingOptions, {});
 
-    var options = {
+    options = {
       controller: this.get('controllerName'),
       template: this.get('templateName'),
       outlet: defaultFor(
@@ -56,8 +58,13 @@ export default Em.ObjectController.extend(
     parent view so we can easily hide outlets in a route's
     view later */
 
-    this.set('_previousRelationships.' + options.outlet,
-      options.into);
+    previousParentView = previousRelationships.get(options.outlet);
+
+    if (previousParentView && previousParentView !== options.into) {
+      Em.warn('You should not use the same named outlet in different views with ember-modals. Behaviour will be unexpected.');
+    }
+
+    previousRelationships.set(options.outlet, options.into);
 
     this.send('renderModal', options);
   },

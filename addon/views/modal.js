@@ -13,6 +13,10 @@ export default Em.View.extend(
   transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
   visible: false,
 
+  outlet: function() {
+    return this.get('_parentView.outletName');
+  }.on('didInsertElement').property(),
+
   autofocus: function() {
     var inputs = this.$().find('input');
 

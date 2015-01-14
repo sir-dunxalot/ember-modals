@@ -4,7 +4,7 @@
   {{!-- role="dialog" is a hook used in the view and for acessibility - keep it --}}
   <section class="modal" role="dialog" data-test="modal-content">
 
-    <button {{action 'closeModal'}} class="close" title="Close the modal" data-test="modal-close">
+    <button {{action 'closeModal' view.outlet}} class="close" title="Close the modal" data-test="modal-close">
       <span class="icon-close">&times;</span>
       <span class="hidden">Close modal</span>
     </button>
