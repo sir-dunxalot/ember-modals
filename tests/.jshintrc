@@ -48,7 +48,7 @@
     "currentRouteName",
     "inspect",
     "showModal",
-    "clickCloseModal"
+    "asyncClick"
   ],
   "node": false,
   "browser": false,

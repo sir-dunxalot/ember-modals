@@ -219,22 +219,22 @@ test('Action routing', function() {
 
     modal.hide();
 
-    closeTests(modal).then(function() {
-      resetAction();
-
-      /* Then test via action on regular controller */
-
-      controller.showModal(templateName);
-
-      showTests();
-      resetAction();
-
-      controller.send('closeModal');
-
-      closeTests(modal);
-    });
+    closeTests(modal);
+    resetAction();
 
   });
+
+  showModal(templateName);
+
+  andThen(function() {
+    showTests();
+    resetAction();
+
+    controller.send('closeModal');
+
+    closeTests(modal);
+  });
+
 });
 
 
@@ -242,21 +242,16 @@ test('Default controller - string argument', function() {
 
   visit('array-controller');
 
+  showModal(templateName);
+
   andThen(function() {
     var routeName = currentRouteName();
     var controller = container.lookup('controller:' + routeName);
+    var constructor = controller.get('constructor').toString();
 
-    /* Argument as string */
+    equal(inspect('controller_constructor').text(), constructor,
+      'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
-    controller.showModal(templateName);
-
-    Em.run.next(function() {
-      var constructor = controller.get('constructor').toString();
-
-      equal(inspect('controller_constructor').text(), constructor,
-        'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
-
-    });
   });
 
 });
@@ -266,20 +261,17 @@ test('Default controller - object argument', function() {
 
   visit('array-controller');
 
+  showModal({
+    template: templateName
+  });
+
   andThen(function() {
     var routeName = currentRouteName();
     var controller = container.lookup('controller:' + routeName);
+    var constructor = controller.get('constructor').toString();
 
-    controller.showModal({
-      template: templateName
-    });
+    equal(inspect('controller_constructor').text(), constructor,
+      'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
-    Em.run.next(function() {
-      var constructor = controller.get('constructor').toString();
-
-      equal(inspect('controller_constructor').text(), constructor,
-        'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
-
-    });
   });
 });

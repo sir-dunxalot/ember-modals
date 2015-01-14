@@ -5,7 +5,7 @@ import config from '../../config/environment';
 
 /* Custom helpers */
 
-import clickCloseModal from './click-close-modal';
+import asyncClick from './async-click';
 import inspect from './inspect';
 import showModal from './show-modal';
 

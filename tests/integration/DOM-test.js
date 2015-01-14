@@ -78,9 +78,10 @@ test('Default modal layout', function() {
 
   });
 
-  clickCloseModal();
+  asyncClick('close');
 
   andThen(function() {
+
     ok(!inspect('overlay', false),
       'modal should be removed from template after clicking the close button');
 
@@ -90,91 +91,78 @@ test('Default modal layout', function() {
 
 
 test('Custom modal template - string argument', function() {
-  var controller = container.lookup('controller:index');
 
   visit('/');
 
-  /* Argument as string */
+  showModal(templateNameTwo);
 
   andThen(function() {
-    controller.showModal(templateNameTwo);
 
-    Em.run.next(function() {
-      ok(inspect('title-two', false),
-        'Second modal template should be rendered in the modal view');
-    });
+    ok(inspect('title-two', false),
+      'Second modal template should be rendered in the modal view');
+
   });
 });
 
 
 test('Custom modal template - object argument', function() {
-  var controller = container.lookup('controller:index');
 
   visit('/');
 
-  /* Argument as string */
+  showModal({
+    template: templateNameTwo
+  });
 
   andThen(function() {
-    controller.showModal({
-      template: templateNameTwo
-    });
 
-    Em.run.next(function() {
-      ok(inspect('title-two', false),
-        'Second modal template should be rendered in the modal view');
-    });
+    ok(inspect('title-two', false),
+      'Second modal template should be rendered in the modal view');
+
   });
 });
 
 
 test('Custom modal model', function() {
-  var controller = container.lookup('controller:index');
   var name = 'hello';
 
   visit('/');
 
+  showModal({
+    template: templateName,
+    model: { name: name }
+  });
+
   andThen(function() {
 
-    controller.showModal({
-      template: templateName,
-      model: {
-        name: name
-      }
-    });
+    equal(inspect('model-name').text(), name,
+      'Modal template should have access to the modal model');
 
-    Em.run.next(function() {
-
-      equal(inspect('model-name').text(), name,
-        'Modal template should have access to the modal model');
-
-    });
   });
 });
 
 
 test('Close button', function() {
-  var controller = container.lookup('controller:index');
 
   visit('/');
 
+  showModal(templateName);
+
   andThen(function() {
 
-    controller.showModal(templateName);
+    var closeButton = inspect('close');
 
-    Em.run.next(function() {
-      var closeButton = inspect('close');
+    ok(closeButton,
+      'Modal layout should have a close button');
 
-      ok(closeButton,
-        'Modal layout should have a close button');
-
-      click(closeButton);
-
-      andThen(function() {
-
-        ok(!inspect('close', false),
-          'Clicking the close button should remove modal layout from DOM');
-
-      });
-    });
   });
+
+  asyncClick('close');
+
+  andThen(function() {
+
+    ok(!inspect('close', false),
+      'Clicking the close button should remove modal layout from DOM');
+
+  });
+
 });
