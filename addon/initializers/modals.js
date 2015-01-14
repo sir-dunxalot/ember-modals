@@ -32,10 +32,10 @@ export function initialize(container, app) {
           this.render(templateName, options);
         },
 
-        removeModal: function(outlet, parentViewName) {
+        removeModal: function(outlet, parentView) {
           this.disconnectOutlet({
             outlet: outlet,
-            parentView: parentViewName
+            parentView: parentView
           });
         }
       },
@@ -64,16 +64,16 @@ export function initialize(container, app) {
       /* If options are passed together as a single object... */
 
       if (optionsIsString) {
-        modal.set('templateName', options);
+        modal.set('template', options);
       } else {
-        modal.set('templateName', options['template']);
+        modal.set('template', options['template']);
       }
 
       /* Sets value to undefined if they're not set */
 
-      modal.set('controllerName', options['controller']);
+      modal.set('controller', options['controller']);
       modal.set('model', options['model']);
-      modal.set('viewName', options['view']);
+      modal.set('view', options['view']);
 
       /* Auto-call the show function to do rendering */
 
