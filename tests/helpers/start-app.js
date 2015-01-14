@@ -5,7 +5,9 @@ import config from '../../config/environment';
 
 /* Custom helpers */
 
+import clickCloseModal from './click-close-modal';
 import inspect from './inspect';
+import showModal from './show-modal';
 
 export default function startApp(attrs) {
   var application;

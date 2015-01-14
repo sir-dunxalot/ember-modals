@@ -46,7 +46,9 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "inspect"
+    "inspect",
+    "showModal",
+    "clickCloseModal"
   ],
   "node": false,
   "browser": false,

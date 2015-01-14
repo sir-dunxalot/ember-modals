@@ -30,7 +30,6 @@ test('Default modal layout', function() {
   visit('/');
 
   andThen(function() {
-
     ok(!inspect('overlay', false),
       'Modal should not be in DOM before it is shown');
 
@@ -38,60 +37,55 @@ test('Default modal layout', function() {
     recalculates once the element is in the DOM */
 
     controller.set('modal.transitionDuration', falseDuration);
+  });
 
-    /* Show modal */
+  showModal(templateName);
 
-    controller.showModal(templateName);
+  andThen(function() {
+    var overlay = inspect('overlay');
+    var modal = inspect('content');
 
-    Em.run.next(function() {
-      var overlay = inspect('overlay');
-      var modal = inspect('content');
+    notEqual(controller.get('modal.transitionDuration'), falseDuration,
+      'transitionDuration should have new value based on CSS transition duration');
 
-      notEqual(controller.get('modal.transitionDuration'), falseDuration,
-        'transitionDuration should have new value based on CSS transition duration');
+    /* Overlay element that wraps the visible modal */
 
-      /* Overlay element that wraps the visible modal */
+    ok(inspect('overlay', false),
+      'Overlay should be in DOM once it is shown');
 
-      ok(inspect('overlay', false),
-        'Overlay should be in DOM once it is shown');
+    ok(overlay.hasClass(viewConstructor.get('overlayClassName')),
+      'Overlay should have overlayClassName');
 
-      ok(overlay.hasClass(viewConstructor.get('overlayClassName')),
-        'Overlay should have overlayClassName');
+    ok(overlay.hasClass('visible'),
+      'Overlay should have class of visible');
 
-      ok(overlay.hasClass('visible'),
-        'Overlay should have class of visible');
+    equal(overlay.attr('aria-hidden'), 'false',
+      'Overlay should have attribute of aria-hidden="false"');
 
-      equal(overlay.attr('aria-hidden'), 'false',
-        'Overlay should have attribute of aria-hidden="false"');
+    /* Modal element that houses main modal content */
 
-      /* Modal element that houses main modal content */
+    ok(inspect('content', false),
+      'Modal element should be rendered in modal layout');
 
-      ok(inspect('content', false),
-        'Modal element should be rendered in modal layout');
+    equal(inspect('content').attr('role'), 'dialog',
+      'Modal element should have role="dialog"');
 
-      equal(inspect('content').attr('role'), 'dialog',
-        'Modal element should have role="dialog"');
+    ok(modal.hasClass('modal'),
+      'Modal should have class of modal');
 
-      ok(modal.hasClass('modal'),
-        'Modal should have class of modal');
-
-      ok(inspect('title', false),
-        'Modal should render the ' + templateName + ' template in the modal layout');
-
-      /* Hide modal */
-
-      click(inspect('close'));
-
-      andThen(function() {
-
-        ok(!inspect('overlay', false),
-          'modal should be removed from template after clicking the close button');
-
-      });
-
-    });
+    ok(inspect('title', false),
+      'Modal should render the ' + templateName + ' template in the modal layout');
 
   });
+
+  clickCloseModal();
+
+  andThen(function() {
+    ok(!inspect('overlay', false),
+      'modal should be removed from template after clicking the close button');
+
+  });
+
 });
 
 
