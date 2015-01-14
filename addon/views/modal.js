@@ -20,7 +20,7 @@ export default Em.View.extend(
 
   outlet: function() {
     return this.get('_parentView.name');
-  }.on('didInsertElement').property(),
+  }.property(),
 
   /* Animation methods. If your override these, call this._super()
   in the methods to ensure properties are set correctly */
