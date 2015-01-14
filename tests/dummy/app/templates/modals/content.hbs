@@ -15,14 +15,25 @@
     {{controller.constructor}}
   </dd>
 
-  <dt>View Constructor</dt>
+  <dt>View constructor</dt>
   <dd data-test="modal-view_constructor">
     {{view.constructor}}
+  </dd>
+
+  <dt>Parent view name</dt>
+  <dd data-test="modal-parent_view_name">
+    {{!-- Pretty hideous stuff --}}
+    {{view._parentView._parentView.renderedName}}
   </dd>
 
   <dt>Template name</dt>
   <dd data-test="modal-template_name">
     {{view.renderedName}}
+  </dd>
+
+  <dt>Outlet name</dt>
+  <dd data-test="modal-outlet_name">
+    {{view.outlet}}
   </dd>
 
 </dl>

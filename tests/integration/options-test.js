@@ -9,7 +9,22 @@ var contains = QUnit.contains;
 var isFunction = QUnit.isFunction;
 var typeOf = QUnit.typeOf;
 
-/* Variables */
+/* Variables - use when you want to overwrite
+the default */
+
+// var choices = {
+//   controller: 'model-one',
+//   model: {
+//     name: 'Peter Griffin',
+//   },
+//   outlet: 'modal-two',
+//   template: 'modals/modal-one',
+//   templateAlt: 'modals/modal-two',
+//   view: 'modal-two',
+
+//   parentViewAlt: 'index',
+//   outletAlt: 'modal-on-index',
+// }
 
 var controller = 'modal-one';
 var template = 'modals/modal-one';
@@ -18,6 +33,13 @@ var model = {
   name: 'Peter Griffin'
 };
 var view = 'modal-two';
+
+/* Rendering options */
+
+var outlet = 'modal-two';
+
+var outletAlt = 'modal-on-index';
+var parentViewAlt = 'index';
 
 var App, container;
 
@@ -34,187 +56,106 @@ module('Modals - Using options with API', {
 
 });
 
-// template, controller, model, view
 // Check changing model
 // Check rendering options
+// Get default options from modal controller
+// Add warning for no options
 
 /* Test combinations of modal options without
-rendering options */
+rendering options. Template is automatically added
+unless otherwise defined */
 
-test('Custom controller', function() {
+var variationsToTest = [
+  {
+    options: { controller: controller },
+  }, {
+    options: { model: model }
+  }, {
+    options: { view: view }
+  }, {
+    options: { controller: controller, model: model }
+  }, {
+    route: 'array-controller',
+    options: { controller: controller, model: model }
+  }, {
+    options: { controller: controller, view: view }
+  }, {
+    options: { model: model, view: view }
+  }, {
+    options: { controller: controller, model: model, view: view }
+  }, {
+    options: { template: templateAlt }
+  }, {
+    options: { template: templateAlt, view: view }
+  }, {
+    renderingOptions: { outlet: outlet }
+  }, {
+    renderingOptions: { outlet: outlet, view: view }
+  }, {
+    renderingOptions: { outlet: outletAlt, parentView: parentViewAlt }
+  }
 
-  visit('/');
+];
 
-  showModal({
-    template: template,
-    controller: controller
-  });
+variationsToTest.forEach(function(variation) {
+  var description = 'Custom ';
+  var route = defaultFor(variation.route, '/');
 
-  andThen(function() {
-    checkTemplate();
-    checkView();
-    checkModel();
-    checkController(controller);
-  });
-});
+  /* Build up the description */
 
+  for (var option in variation.options) {
+    description += option + ', ';
+  }
 
-test('Custom model', function() {
+  for (var option in variation.renderingOptions) {
+    description += option + ', ';
+  }
 
-  visit('/');
+  /* Set the template - hackyyyyy */
 
-  showModal({
-    template: template,
-    model: model
-  });
+  if (!variation.options) {
+    variation.options = {};
+    variation.options.template = template;
+  } else if (!variation.options.template) {
+    variation.options.template = template;
+  }
 
-  andThen(function() {
-    checkTemplate();
-    checkView();
-    checkModel(model);
-    checkController();
-  });
-});
+  /* Run the test */
 
+  test(description, function() {
 
-test('Custom view', function() {
+    expect(6);
 
-  visit('/');
+    visit(route);
 
-  showModal({
-    template: template,
-    view: view
-  });
+    showModal(variation.options, variation.renderingOptions);
 
-  andThen(function() {
-    checkTemplate();
-    checkView(view);
-    checkModel();
-    checkController();
-  });
-});
-
-
-test('Custom controller and model', function() {
-
-  visit('/');
-
-  showModal({
-    template: template,
-    controller: controller,
-    model: model
-  });
-
-  andThen(function() {
-    checkTemplate();
-    checkView();
-    checkModel(model);
-    checkController(controller);
-  });
-});
-
-
-test('Custom controller and view', function() {
-
-  visit('/');
-
-  showModal({
-    template: template,
-    controller: controller,
-    view: view
-  });
-
-  andThen(function() {
-    checkTemplate();
-    checkView(view);
-    checkModel();
-    checkController(controller);
+    andThen(function() {
+      testModal(variation.options, variation.renderingOptions);
+    });
   });
 });
-
-
-test('Custom model and view', function() {
-
-  visit('/');
-
-  showModal({
-    template: template,
-    model: model,
-    view: view
-  });
-
-  andThen(function() {
-    checkTemplate();
-    checkView(view);
-    checkModel(model);
-    checkController();
-  });
-});
-
-
-test('Custom controller, model, and view', function() {
-
-  visit('/');
-
-  showModal({
-    template: template,
-    controller: controller,
-    model: model,
-    view: view
-  });
-
-  andThen(function() {
-    checkTemplate();
-    checkView(view);
-    checkModel(model);
-    checkController(controller);
-  });
-});
-
-
-test('Custom template', function() {
-
-  visit('/');
-
-  showModal({
-    template: templateAlt
-  });
-
-  andThen(function() {
-    checkTemplate(templateAlt);
-    checkView();
-    checkModel();
-    checkController();
-  });
-});
-
-
-test('Custom template and view', function() {
-
-  visit('/');
-
-  showModal({
-    template: templateAlt,
-    view: view
-  });
-
-  andThen(function() {
-    checkTemplate(templateAlt);
-    checkView(view);
-    checkModel();
-    checkController();
-  });
-});
-
-
-
-
-
-
-
 
 
 /* Helper methods */
+
+var testModal = function(options, renderingOptions) {
+
+  /* Allow us to pass no object */
+
+  options = defaultFor(options, {});
+  renderingOptions = defaultFor(renderingOptions, {});
+
+  /* Then check each component of the modal */
+
+  checkTemplate(options.template);
+  checkView(options.view);
+  checkModel(options.model);
+  checkController(options.controller);
+
+  checkOutlet(renderingOptions.outlet);
+  checkParentView(renderingOptions.parentView);
+};
 
 var checkTemplate = function(name) {
   var expectedName, text;
@@ -258,7 +199,7 @@ var checkModel = function(expectedModel) {
 };
 
 var checkController = function(name) {
-  var constructor = inspect('controller_constructor').text();
+  var constructor = inspect('controller_constructor').text().trim();
   var text;
 
   name = defaultFor(name, currentRouteName());
@@ -266,4 +207,20 @@ var checkController = function(name) {
 
   ok(constructor.indexOf(name) > -1,
     'Modal should have the ' + text + ' controller');
+};
+
+var checkOutlet = function(name) {
+  name = defaultFor(name, 'modal');
+
+  equal(inspect('outlet_name').text().trim(), name,
+    'Modal should be rendered into the ' + name + ' outlet');
+};
+
+var checkParentView = function(name) {
+  var actualName = inspect('parent_view_name').text().trim();
+
+  name = defaultFor(name, 'application');
+
+  equal(name, actualName,
+    'The modal\'s outlet should have the ' + name + ' parent view');
 };
