@@ -3,6 +3,8 @@ import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 
 var App, container;
+var templateName = 'modals/modal-one';
+var templateNameTwo = 'modals/modal-two';
 
 module('Modals - DOM', {
 
@@ -21,7 +23,6 @@ module('Modals - DOM', {
 test('Default modal layout', function() {
   var controller = container.lookup('controller:index');
   var falseDuration = 1234;
-  var templateName = 'test-modal';
   var viewConstructor = container.lookup('view:modal');
 
   expect(11);
@@ -102,7 +103,7 @@ test('Custom modal template - string argument', function() {
   /* Argument as string */
 
   andThen(function() {
-    controller.showModal('test-modal-two');
+    controller.showModal(templateNameTwo);
 
     Em.run.next(function() {
       ok(inspect('title-two', false),
@@ -121,7 +122,7 @@ test('Custom modal template - object argument', function() {
 
   andThen(function() {
     controller.showModal({
-      template: 'test-modal-two'
+      template: templateNameTwo
     });
 
     Em.run.next(function() {
@@ -141,7 +142,7 @@ test('Custom modal model', function() {
   andThen(function() {
 
     controller.showModal({
-      template: 'test-modal',
+      template: templateName,
       model: {
         name: name
       }
@@ -164,7 +165,7 @@ test('Close button', function() {
 
   andThen(function() {
 
-    controller.showModal('test-modal');
+    controller.showModal(templateName);
 
     Em.run.next(function() {
       var closeButton = inspect('close');

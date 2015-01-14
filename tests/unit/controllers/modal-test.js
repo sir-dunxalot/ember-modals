@@ -18,47 +18,34 @@ test('Event triggers', function() {
 
   isFunction(controller.trigger,
     'trigger should be a function');
+
 });
 
 
 test('Default properties', function() {
-  var keys = ['controllerName', 'model', 'templateName'];
-  var options = ['outlet', 'transitionDuration', 'viewName'];
+  var properties = ['controller', 'model', 'template', 'view'];
+  var options = [
+    'defaultOutlet',
+    'defaultParentView',
+    'defaultView',
+    'transitionDuration'
+  ];
 
-  keys.forEach(function(key) {
+  expect(9);
+
+  properties.forEach(function(key) {
     strictEqual(controller.get(key), null,
       key + ' should be null');
   });
 
   options.forEach(function(option) {
     ok(controller.get(option),
-      'Should have a default value for the ' + option + 'option');
+      'Should have a default value for the ' + option + ' option');
   });
 
-});
+  ok(controller.get('_previousRelationships'),
+    'Should have a _previousRelationships property');
 
-
-test('_options property', function() {
-  var _options = Em.Object.create({
-    controllerName: controller.get('controllerName'),
-    outlet: controller.get('outlet'),
-    templateName: controller.get('templateName'),
-    viewName: controller.get('viewName')
-  });
-
-  ok(controller.get('_options'),
-    'Should have an _options property');
-
-  propEqual(controller.get('_options'), _options,
-    '_options CP should return an object of properties required');
-
-  Em.keys(_options).forEach(function() {
-    controller.set('outlet', 'test');
-    _options.set('outlet', 'test'); // Update what we expect
-
-    propEqual(controller.get('_options'), _options,
-      '_options CP should reflect property change');
-  });
 });
 
 

@@ -24,3 +24,5 @@ If you have any issues or feature requests, please [open an issue](https://githu
 - More Browser support for included stylesheets
 - Modal view to use `one()` instead of `on()`
 - Test(s) for animation duration of modals
+- Clicking on overlay should close modal
+- Esc should close modal

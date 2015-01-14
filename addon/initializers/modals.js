@@ -20,7 +20,10 @@ export function initialize(container, app) {
         renderModal: function(options) {
           var templateName = options.template;
 
-          delete options.template;
+          /* Assert the template exists */
+
+          Em.assert('Could not render the modal because no template was found with the name ' + templateName,
+            container.has('template:' + templateName));
 
           /* Default to route's controller */
 
