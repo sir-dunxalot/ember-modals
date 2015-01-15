@@ -10,28 +10,35 @@ export default {
 export function initialize(container, app) {
   var applicationRoute = container.lookup('route:application');
 
-  /* Use if statement to allow unit tests to work */
-
   if (applicationRoute) {
     applicationRoute.reopen({
+
+      /* You shouldn't need to call these aciton directly. Use
+      show() and hide() on the modal controller */
+
       _actions: {
         renderModal: function(options) {
-          options.setProperties({
-            controller: defaultFor(
-              options.get('controllerName'),
-              this.get('controller.currentRouteName')
-            ),
-            into: 'application',
-            view: options.get('viewName')
-          });
+          var templateName = options.template;
 
-          this.render(options.get('templateName'), options);
+          /* Assert the template exists */
+
+          Em.assert('Could not render the modal because no template was found with the name ' + templateName,
+            container.has('template:' + templateName));
+
+          /* Default to route's controller */
+
+          options.controller = defaultFor(
+            options.controller,
+            this.get('controller.currentRouteName')
+          );
+
+          this.render(templateName, options);
         },
 
-        removeModal: function(options) {
+        removeModal: function(outlet, parentView) {
           this.disconnectOutlet({
-            outlet: options.get('outlet'),
-            parentView: 'application',
+            outlet: outlet,
+            parentView: parentView
           });
         }
       },
@@ -45,35 +52,39 @@ export function initialize(container, app) {
     needs: ['modal'],
 
     _actions: {
-      closeModal: function() {
-        this.get('modal').hide();
+      closeModal: function(outlet) {
+        this.get('modal').hide(outlet);
       }
     },
 
-    showModal: function(options) {
-      var modalOptions = {
-        controllerName: null,
-        model: null,
-        templateName: null
-      };
+    showModal: function(options, renderingOptions) {
+      var modal = this.get('modal');
+      var optionsIsString = Em.typeOf(options) === 'string';
+
+      if (!options) {
+        Em.assert('You must pass options or a template name to the showModal() method');
+      } else {
+        Em.assert('You can\'t show a modal without a template name',
+          optionsIsString || options['template']);
+      }
 
       /* If options are passed together as a single object... */
 
-      if (typeof options === 'string') {
-        modalOptions.templateName = options;
+      if (optionsIsString) {
+        modal.set('template', options);
       } else {
-        Em.assert('You must pass a templateName to the showModal method', options['template']);
-
-        modalOptions.templateName = options['template'];
-        modalOptions.controllerName = options['controller'];
-        modalOptions.model = options['model'];
+        modal.set('template', options['template']);
       }
 
-      for (var option in modalOptions) {
-        this.set('modal.' + option, modalOptions[option]);
-      }
+      /* Sets value to undefined if they're not set */
 
-      this.get('modal').show();
+      modal.set('controller', options['controller']);
+      modal.set('model', options['model']);
+      modal.set('view', options['view']);
+
+      /* Auto-call the show function to do rendering */
+
+      this.get('modal').show(renderingOptions);
     }
 
   });

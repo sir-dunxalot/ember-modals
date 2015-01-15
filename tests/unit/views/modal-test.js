@@ -30,6 +30,12 @@ test('Visuals', function() {
   equal(view.get('layoutName'), 'modal',
     'Should have default layoutName');
 
+  strictEqual(view.get('outlet'), null,
+    'Should have an outlet property');
+
+  ok(view.get('overlayClassName'),
+    'Should have a default overlayClassName');
+
   isFunction(view.show,
     'Should have a show() method');
 

@@ -1,0 +1,42 @@
+{{!-- The test suite is reliant on this content.
+Change if you dare! --}}
+
+<dl>
+
+  <dt>Model</dt>
+  <dd data-test="modal-model">
+    {{modal.model}}
+  </dd>
+
+  <dt>Model.name</dt>
+  <dd data-test="modal-model-name">
+    {{modal.model.name}}
+  </dd>
+
+  <dt>Controller constructor</dt>
+  <dd data-test="modal-controller_constructor">
+    {{controller.constructor}}
+  </dd>
+
+  <dt>View constructor</dt>
+  <dd data-test="modal-view_constructor">
+    {{view.constructor}}
+  </dd>
+
+  <dt>Parent view name</dt>
+  <dd data-test="modal-parent_view_name">
+    {{!-- Pretty hideous stuff --}}
+    {{view._parentView._parentView.renderedName}}
+  </dd>
+
+  <dt>Template name</dt>
+  <dd data-test="modal-template_name">
+    {{view.renderedName}}
+  </dd>
+
+  <dt>Outlet name</dt>
+  <dd data-test="modal-outlet_name">
+    {{view.outlet}}
+  </dd>
+
+</dl>
