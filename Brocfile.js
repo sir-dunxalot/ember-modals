@@ -4,11 +4,13 @@
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 var app = new EmberAddon({
+
   modals: {
     layout: true,
     style: true,
     animation: 'scale'
   }
+
 });
 
 // Use `app.import` to add additional libraries to the generated
