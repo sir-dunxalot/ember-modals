@@ -22,7 +22,7 @@ export default Em.View.extend(
     return this.get('_parentView.name');
   }.property(),
 
-  /* Animation methods. If your override these, call this._super()
+  /* Animation methods. If you override these, call this._super()
   in the methods to ensure properties are set correctly */
 
   hide: function() {
