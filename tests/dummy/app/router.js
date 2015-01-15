@@ -7,6 +7,10 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('array-controller');
+
+  this.resource('info', function() {
+    this.route('about');
+  });
 });
 
 export default Router;
