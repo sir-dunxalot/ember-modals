@@ -57,6 +57,19 @@ export default Em.Mixin.create({
         outlet: 'modal-on-' + viewName,
         parentView: viewName
       });
+    },
+
+    showModalNine: function() {
+      var viewName = this.toString().split(':')[1];
+
+      this.showModal(template, {
+        outlet: 'modal-on-' + viewName,
+        parentView: viewName
+      });
+
+      Em.run.later(this, function() {
+        this.showModal(template.replace('one', 'two'));
+      }, 500);
     }
 
   }

@@ -8,7 +8,7 @@ import {
   checkTemplate,
   checkView,
   testModal
-} from '../helpers/checks';
+} from '../helpers/modal-tests';
 
 /* QUnit helpers */
 
@@ -113,6 +113,9 @@ var variationsToTest = [
 
 variationsToTest.forEach(function(variation) {
   var description = 'Custom ';
+
+  /* Set the route if no route is specified */
+
   var route = defaultFor(variation.route, '/');
 
   /* Build up the description */

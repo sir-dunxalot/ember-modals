@@ -57,11 +57,17 @@ export default Em.View.extend(
     this.autofocus();
   }.on('didInsertElement'),
 
+  /* Private methods */
 
   _listen: function() {
     this.get('controller.modal').on('closeModal', this, function() {
-      if (!this.get('isDestroying')) {
-        this.hide();
+      var outletBeingClosed = this.get('controller.modal._outletBeingClosed');
+      var shouldCloseOutlet = outletBeingClosed === this.get('outlet');
+
+      if (!this.get('isDestroying') && shouldCloseOutlet) {
+        if (!this.get('isDestroying')) {
+          this.hide();
+        }
       }
     });
   }.on('willInsertElement'),

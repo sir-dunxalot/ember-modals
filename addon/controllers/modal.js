@@ -18,6 +18,8 @@ export default Em.ObjectController.extend(
   template: null,
   view: null,
 
+  _outletBeingClosed: null,
+
   /**
   Triggers the animation to hide the modal. Once the `transitionDuration` has passed the action to remove the outlet will be triggered.
 
@@ -30,12 +32,14 @@ export default Em.ObjectController.extend(
   hide: function(outlet) {
     var parentView;
 
+    this.set('_outletBeingClosed', outlet);
     this.trigger('closeModal'); // Start close animation
 
     outlet = defaultFor(outlet, this.get('defaultOutlet'));
     parentView = this.get('_previousRelationships.' + outlet);
 
     Em.run.later(this, function() {
+      this.set('_outletBeingClosed', null);
       this.send('removeModal', outlet, parentView);
     }, this.get('transitionDuration'));
   },

@@ -7,7 +7,7 @@ import {
   checkTemplate,
   checkView,
   testModal
-} from '../helpers/checks';
+} from '../helpers/modal-tests';
 
 /* QUnit helpers */
 

@@ -1,4 +1,5 @@
 import defaultFor from 'ember-modals/utils/default-for';
+import Em from 'ember';
 
 var defaultTemplate = 'modals/modal-one';
 var defaultView = 'modal';
@@ -28,6 +29,19 @@ modal. If an option is passed, it checks that the given option
 is set on the modal. If no option is passed it checks that the
 default option is set on the modal */
 
+
+export function checkController(name) {
+  var constructor = inspect('controller_constructor').text().trim();
+  var text;
+
+  name = defaultFor(name, currentRouteName());
+  text = name ? name : 'default (a.k.a. the route\'s controller';
+
+  ok(constructor.indexOf(name) > -1,
+    'Modal should have the ' + text + ' controller');
+
+}
+
 export function checkTemplate(name) {
   var expectedName, text;
 
@@ -40,16 +54,6 @@ export function checkTemplate(name) {
 
 }
 
-export function checkView(name) {
-  var expectedName;
-
-  name = defaultFor(name, defaultView);
-  expectedName = ':' + name + ':';
-
-  ok(inspect('view_constructor').text().indexOf(expectedName) > -1,
-    'Modal should have the ' + name + ' view');
-
-}
 
 export function checkModel(expectedModel) {
   var name;
@@ -66,19 +70,6 @@ export function checkModel(expectedModel) {
       'The modal should not have a model');
 
   }
-
-}
-
-export function checkController(name) {
-  var constructor = inspect('controller_constructor').text().trim();
-  var text;
-
-  name = defaultFor(name, currentRouteName());
-  text = name ? name : 'default (a.k.a. the route\'s controller';
-
-  ok(constructor.indexOf(name) > -1,
-    'Modal should have the ' + text + ' controller');
-
 }
 
 export function checkOutlet(name) {
@@ -96,5 +87,16 @@ export function checkParentView(name) {
 
   equal(name, actualName,
     'The modal\'s outlet should have the ' + name + ' parent view');
+
+}
+
+export function checkView(name) {
+  var expectedName;
+
+  name = defaultFor(name, defaultView);
+  expectedName = ':' + name + ':';
+
+  ok(inspect('view_constructor').text().indexOf(expectedName) > -1,
+    'Modal should have the ' + name + ' view');
 
 }
