@@ -15,6 +15,11 @@ Please note, there may be backwards incompatible changes before v1.0.0.
 Documentation, including setup, usage, customization, styling/animating, and development can be found in [the wiki](https://github.com/sir-dunxalot/ember-modals/wiki).
 
 
+## Demo
+
+In absence of an online demo (WIP), you can clone this repo to your desktop and run `ember s`. You will see a lot of buttons that allow you to show preset modals. Each modal contains info about the context in which it's rendered. The demo uses the `'scale'` animation (see [styling](https://github.com/sir-dunxalot/ember-modals/wiki/Styling) for more info).
+
+
 ## Issues
 
 If you have any issues or feature requests, please [open an issue](https://github.com/sir-dunxalot/ember-modals/issues/new) or submit a PR.
@@ -28,3 +33,4 @@ If you have any issues or feature requests, please [open an issue](https://githu
 - Test(s) for animation duration of modals
 - Clicking on the overlay should close the modal
 - Hitting esc should close the modal
+- Online demo
