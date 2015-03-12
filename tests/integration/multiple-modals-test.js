@@ -1,13 +1,8 @@
-import Em from 'ember';
-import { test } from 'ember-qunit';
+import Ember from 'ember';
 import startApp from '../helpers/start-app';
-import {
-  checkController,
-  checkModel,
-  checkTemplate,
-  checkView,
-  testModal
-} from '../helpers/modal-tests';
+import { test } from 'ember-qunit';
+import { module } from 'qunit';
+import { testModal } from '../helpers/modal-tests';
 
 /* QUnit helpers */
 
@@ -25,13 +20,13 @@ module('Modals - Using multiple modals', {
   },
 
   teardown: function() {
-    Em.run(App, 'reset');
+    Ember.run(App, 'reset');
   }
 
 });
 
 
-test('Changing between outlets on the same route', function() {
+test('Changing between outlets on the same route', function(assert) {
   var options = {
     template: 'modals/modal-one'
   };
@@ -40,14 +35,14 @@ test('Changing between outlets on the same route', function() {
     outlet: 'modal-two'
   };
 
-  expect(12);
+  assert.expect(12);
 
   visit('/');
 
   showModal(options);
 
   andThen(function() {
-    testModal(options);
+    testModal(assert, options);
   });
 
   asyncClick('close');
@@ -55,12 +50,12 @@ test('Changing between outlets on the same route', function() {
   showModal(options, renderingOptions);
 
   andThen(function() {
-    testModal(options, renderingOptions);
+    testModal(assert, options, renderingOptions);
   });
 });
 
 
-test('Changing between outlets on different views', function() {
+test('Changing between outlets on different views', function(assert) {
   var options = {
     template: 'modals/modal-one'
   };
@@ -70,14 +65,14 @@ test('Changing between outlets on different views', function() {
     parentView: 'index'
   };
 
-  expect(12);
+  assert.expect(12);
 
   visit('/');
 
   showModal(options);
 
   andThen(function() {
-    testModal(options);
+    testModal(assert, options);
   });
 
   asyncClick('close');
@@ -85,12 +80,12 @@ test('Changing between outlets on different views', function() {
   showModal(options, renderingOptions);
 
   andThen(function() {
-    testModal(options, renderingOptions);
+    testModal(assert, options, renderingOptions);
   });
 });
 
 
-test('Showing two modals at the same time', function() {
+test('Showing two modals at the same time', function(assert) {
   var options = {
     template: 'modals/modal-one'
   };
@@ -104,32 +99,32 @@ test('Showing two modals at the same time', function() {
     parentView: 'index'
   };
 
-  expect(19);
+  assert.expect(19);
 
   visit('/');
 
   showModal(options);
 
   andThen(function() {
-    testModal(options);
+    testModal(assert, options);
   });
 
   showModal(optionsAlt, renderingOptions);
 
   andThen(function() {
-    testModal(optionsAlt, renderingOptions);
+    testModal(assert, optionsAlt, renderingOptions);
   });
 
   asyncClick('close');
 
   andThen(function() {
 
-    ok(inspect('close', false),
+    assert.ok(inspect('close', false),
       'Should still be one close button in the DOM');
 
     /* Original modal should still be in the DOM */
 
-    testModal(options);
+    testModal(assert, options);
 
   });
 });

@@ -6,7 +6,7 @@ export default {
   initialize: initialize
 };
 
-export function initialize(container, app) {
+export function initialize(/* container, app */) {
 
   Em.ControllerMixin.reopen({
     modal: Em.computed.alias('controllers.modal'),

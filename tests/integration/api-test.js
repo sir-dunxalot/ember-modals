@@ -1,6 +1,7 @@
 import Em from 'ember';
-import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
+import { test } from 'ember-qunit';
+import { module } from 'qunit';
 
 /* QUnit helpers */
 
@@ -58,7 +59,7 @@ module('Modals - Additions to API', {
 });
 
 
-test('Application route', function() {
+test('Application route', function(assert) {
   var controller = container.lookup('controller:modal');
   var route = container.lookup('route:application');
 
@@ -78,14 +79,14 @@ test('Application route', function() {
       template: templateName
     });
 
-    ok(actionHandled,
+    assert.ok(actionHandled,
       'The renderModal action should call render');
 
     resetAction();
 
     route.send('removeModal');
 
-    ok(actionHandled,
+    assert.ok(actionHandled,
       'The removeModal action should call disconnectOutlet');
 
   });
@@ -95,7 +96,7 @@ test('Application route', function() {
 /* Define the controllers' tests here so we can share them
 between object and array controller tests */
 
-var controllerTests = function(controller) {
+var controllerTests = function(assert, controller) {
   var modalController = controller.get('modal');
 
   modalController.set('hide', handleAction);
@@ -105,10 +106,10 @@ var controllerTests = function(controller) {
 
   controller.send('closeModal');
 
-  ok(actionHandled,
+  assert.ok(actionHandled,
     'Controller should have a closeModal action');
 
-  ok(modalController,
+  assert.ok(modalController,
     'Controller should have a modal property');
 
   typeOf(modalController, 'instance',
@@ -120,28 +121,28 @@ var controllerTests = function(controller) {
 };
 
 
-test('Object controllers', function() {
+test('Object controllers', function(assert) {
   var controller = container.lookup('controller:index');
 
-  expect(5);
+  assert.expect(5);
 
   visit('/');
 
   andThen(function() {
-    controllerTests(controller);
+    controllerTests(assert, controller);
   });
 });
 
 
-test('Array controllers', function() {
+test('Array controllers', function(assert) {
   var controller = container.lookup('controller:array-controller');
 
-  expect(5);
+  assert.expect(5);
 
   visit('array-controller');
 
   andThen(function() {
-    controllerTests(controller);
+    controllerTests(assert, controller);
   });
 });
 
@@ -149,18 +150,18 @@ test('Array controllers', function() {
 and once for calling the hide() and show() methods directly) so
 we specify them as variables */
 
-var showTests = function() {
+var showTests = function(assert) {
 
-  ok(actionHandled,
+  assert.ok(actionHandled,
     'showModal should send renderModal to the application route');
 
-  ok(actionArguments.templateName && actionArguments.options,
+  assert.ok(actionArguments.templateName && actionArguments.options,
     'showModal shound send options to renderModal in the application route');
 
 };
 
 
-var closeTests = function(modal) {
+var closeTests = function(assert, modal) {
 
   /* Use a promise so the test waits for the transitionDuration */
 
@@ -169,17 +170,17 @@ var closeTests = function(modal) {
 
     Em.run.later(function() {
 
-      ok(!actionHandled,
+      assert.ok(!actionHandled,
         'closeModal should not send renderModal to the application route until after the transitionDuration');
 
     }, transitionDuration - 10);
 
     Em.run.later(function() {
 
-      ok(actionHandled,
+      assert.ok(actionHandled,
         'closeModal shound send renderModal to the application route after the transitionDuration');
 
-      equal(actionArguments.options.outlet, modal.get('defaultOutlet'),
+      assert.equal(actionArguments.options.outlet, modal.get('defaultOutlet'),
         'closeModal should send options to removeModal in the application route');
 
       resolve();
@@ -189,13 +190,13 @@ var closeTests = function(modal) {
 
 };
 
-test('Action routing', function() {
+test('Action routing', function(assert) {
   var applicationRoute = container.lookup('route:application');
   var controller = container.lookup('controller:index');
   var modal = controller.get('modal');
   var options = ['controller', 'outlet', 'template', 'view'];
 
-  expect(10);
+  assert.expect(10);
 
   visit('/');
 
@@ -214,12 +215,12 @@ test('Action routing', function() {
     modal.set('template', templateName);
     modal.show();
 
-    showTests();
+    showTests(assert);
     resetAction();
 
     modal.hide();
 
-    closeTests(modal);
+    closeTests(assert, modal);
     resetAction();
 
   });
@@ -227,18 +228,18 @@ test('Action routing', function() {
   showModal(templateName);
 
   andThen(function() {
-    showTests();
+    showTests(assert);
     resetAction();
 
     controller.send('closeModal');
 
-    closeTests(modal);
+    closeTests(assert, modal);
   });
 
 });
 
 
-test('Default controller - string argument', function() {
+test('Default controller - string argument', function(assert) {
 
   visit('array-controller');
 
@@ -249,7 +250,7 @@ test('Default controller - string argument', function() {
     var controller = container.lookup('controller:' + routeName);
     var constructor = controller.get('constructor').toString();
 
-    equal(inspect('controller_constructor').text().trim(), constructor,
+    assert.equal(inspect('controller_constructor').text().trim(), constructor,
       'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
   });
@@ -257,7 +258,7 @@ test('Default controller - string argument', function() {
 });
 
 
-test('Default controller - object argument', function() {
+test('Default controller - object argument', function(assert) {
 
   visit('array-controller');
 
@@ -270,7 +271,7 @@ test('Default controller - object argument', function() {
     var controller = container.lookup('controller:' + routeName);
     var constructor = controller.get('constructor').toString();
 
-    equal(inspect('controller_constructor').text().trim(), constructor,
+    assert.equal(inspect('controller_constructor').text().trim(), constructor,
       'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
 
   });

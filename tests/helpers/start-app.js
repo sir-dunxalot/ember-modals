@@ -5,9 +5,9 @@ import config from '../../config/environment';
 
 /* Custom helpers */
 
-import asyncClick from './async-click';
-import inspect from './inspect';
-import showModal from './show-modal';
+import asyncClick from './async/async-click';
+import inspect from './sync/inspect';
+import showModal from './async/show-modal';
 
 export default function startApp(attrs) {
   var application;

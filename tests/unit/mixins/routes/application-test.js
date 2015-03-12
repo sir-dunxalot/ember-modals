@@ -1,6 +1,7 @@
 import ApplicationRouteMixin from 'ember-modals/mixins/routes/application';
 import Ember from 'ember';
 import { test } from 'ember-qunit';
+import { module } from 'qunit';
 
 var contains = QUnit.contains;
 var isFunction = QUnit.isFunction;
@@ -8,13 +9,13 @@ var App, container;
 
 module('Modals - Application route mixin');
 
-test('Actions hash', function() {
+test('Actions hash', function(assert) {
 
   var TestClass = Ember.Object.extend(ApplicationRouteMixin);
   var testClassInstance = TestClass.create();
   var actions = testClassInstance.actions;
 
-  ok(testClassInstance,
+  assert.ok(testClassInstance,
     'The test object should be created without errors');
 
   isFunction(actions.renderModal,

@@ -1,6 +1,3 @@
-import Em from 'ember';
-import defaultFor from '../default-for';
-
 /**
 @method Utils.computed.if
 @param {String} dependentKey The name of the Ember property to observe
