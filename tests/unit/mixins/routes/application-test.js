@@ -13,7 +13,9 @@ test('Actions hash', function(assert) {
 
   var TestClass = Ember.Object.extend(ApplicationRouteMixin);
   var testClassInstance = TestClass.create();
-  var actions = testClassInstance.actions;
+  var actions = testClassInstance.actions || testClassInstance._actions;
+
+  console.log(testClassInstance);
 
   assert.ok(testClassInstance,
     'The test object should be created without errors');
