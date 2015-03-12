@@ -1,6 +1,7 @@
 import Em from 'ember';
-import { moduleFor, test } from 'ember-qunit';
 import { initialize } from 'ember-modals/initializers/modals';
+import { test } from 'ember-qunit';
+import { module } from 'qunit';
 
 var contains = QUnit.contains;
 var isFunction = QUnit.isFunction;
@@ -22,7 +23,7 @@ module('Modals - Modal initializer', {
   }
 });
 
-test('Reopening Em.ControllerMixin', function() {
+test('Reopening Em.ControllerMixin', function(assert) {
   var modalMixin = Em.A(Em.ControllerMixin.mixins).find(function(mixin) {
     var properties = mixin.properties;
 
@@ -35,12 +36,12 @@ test('Reopening Em.ControllerMixin', function() {
 
   var controllerProxy;
 
-  ok(modalMixin,
+  assert.ok(modalMixin,
     'Mixin for modals should be added to Em.ControllerMixin');
 
   controllerProxy = Em.Object.create(modalMixin.properties);
 
-  ok(controllerProxy.get('modal'),
+  assert.ok(controllerProxy.get('modal'),
     'Controller mixin should have a modal property');
 
   contains(Em.A(controllerProxy.get('needs')), 'modal',

@@ -1,6 +1,7 @@
-import Em from 'ember';
-import { test } from 'ember-qunit';
+import Ember from 'ember';
 import startApp from '../helpers/start-app';
+import { test } from 'ember-qunit';
+import { module } from 'qunit';
 
 var App, container;
 var templateName = 'modals/modal-one';
@@ -14,23 +15,23 @@ module('Modals - DOM', {
   },
 
   teardown: function() {
-    Em.run(App, 'reset');
+    Ember.run(App, 'reset');
   }
 
 });
 
 
-test('Default modal layout', function() {
+test('Default modal layout', function(assert) {
   var controller = container.lookup('controller:index');
   var falseDuration = 1234;
   var viewConstructor = container.lookup('view:modal');
 
-  expect(11);
+  assert.expect(11);
 
   visit('/');
 
   andThen(function() {
-    ok(!inspect('overlay', false),
+    assert.ok(!inspect('overlay', false),
       'Modal should not be in DOM before it is shown');
 
     /* Set some false duration so we can check if the CP
@@ -45,35 +46,35 @@ test('Default modal layout', function() {
     var overlay = inspect('overlay');
     var modal = inspect('content');
 
-    notEqual(controller.get('modal.transitionDuration'), falseDuration,
+    assert.notEqual(controller.get('modal.transitionDuration'), falseDuration,
       'transitionDuration should have new value based on CSS transition duration');
 
     /* Overlay element that wraps the visible modal */
 
-    ok(inspect('overlay', false),
+    assert.ok(inspect('overlay', false),
       'Overlay should be in DOM once it is shown');
 
-    ok(overlay.hasClass(viewConstructor.get('overlayClassName')),
+    assert.ok(overlay.hasClass(viewConstructor.get('overlayClassName')),
       'Overlay should have overlayClassName');
 
-    ok(overlay.hasClass('visible'),
+    assert.ok(overlay.hasClass('visible'),
       'Overlay should have class of visible');
 
-    equal(overlay.attr('aria-hidden'), 'false',
+    assert.equal(overlay.attr('aria-hidden'), 'false',
       'Overlay should have attribute of aria-hidden="false"');
 
     /* Modal element that houses main modal content */
 
-    ok(inspect('content', false),
+    assert.ok(inspect('content', false),
       'Modal element should be rendered in modal layout');
 
-    equal(inspect('content').attr('role'), 'dialog',
+    assert.equal(inspect('content').attr('role'), 'dialog',
       'Modal element should have role="dialog"');
 
-    ok(modal.hasClass('modal'),
+    assert.ok(modal.hasClass('modal'),
       'Modal should have class of modal');
 
-    ok(inspect('title', false),
+    assert.ok(inspect('title', false),
       'Modal should render the ' + templateName + ' template in the modal layout');
 
   });
@@ -82,7 +83,7 @@ test('Default modal layout', function() {
 
   andThen(function() {
 
-    ok(!inspect('overlay', false),
+    assert.ok(!inspect('overlay', false),
       'modal should be removed from template after clicking the close button');
 
   });
@@ -90,7 +91,7 @@ test('Default modal layout', function() {
 });
 
 
-test('Custom modal template - string argument', function() {
+test('Custom modal template - string argument', function(assert) {
 
   visit('/');
 
@@ -98,14 +99,14 @@ test('Custom modal template - string argument', function() {
 
   andThen(function() {
 
-    ok(inspect('title-two', false),
+    assert.ok(inspect('title-two', false),
       'Second modal template should be rendered in the modal view');
 
   });
 });
 
 
-test('Custom modal template - object argument', function() {
+test('Custom modal template - object argument', function(assert) {
 
   visit('/');
 
@@ -115,14 +116,14 @@ test('Custom modal template - object argument', function() {
 
   andThen(function() {
 
-    ok(inspect('title-two', false),
+    assert.ok(inspect('title-two', false),
       'Second modal template should be rendered in the modal view');
 
   });
 });
 
 
-test('Custom modal model', function() {
+test('Custom modal model', function(assert) {
   var name = 'hello';
 
   visit('/');
@@ -134,24 +135,23 @@ test('Custom modal model', function() {
 
   andThen(function() {
 
-    equal(inspect('model-name').text().trim(), name,
+    assert.equal(inspect('model-name').text().trim(), name,
       'Modal template should have access to the modal model');
 
   });
 });
 
 
-test('Close button', function() {
+test('Close button', function(assert) {
 
   visit('/');
 
   showModal(templateName);
 
   andThen(function() {
-
     var closeButton = inspect('close');
 
-    ok(closeButton,
+    assert.ok(closeButton,
       'Modal layout should have a close button');
 
   });
@@ -160,7 +160,7 @@ test('Close button', function() {
 
   andThen(function() {
 
-    ok(!inspect('close', false),
+    assert.ok(!inspect('close', false),
       'Clicking the close button should remove modal layout from DOM');
 
   });

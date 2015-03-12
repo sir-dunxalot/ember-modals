@@ -11,9 +11,9 @@ moduleFor('controller:modal', 'Modals - Modal Controller', {
 });
 
 
-test('Event triggers', function() {
+test('Event triggers', function(assert) {
 
-  ok(controller.trigger,
+  assert.ok(controller.trigger,
     'Em.Evented should be mixed in');
 
   isFunction(controller.trigger,
@@ -22,7 +22,7 @@ test('Event triggers', function() {
 });
 
 
-test('Default properties', function() {
+test('Default properties', function(assert) {
   var properties = ['controller', 'model', 'template', 'view'];
   var options = [
     'defaultOutlet',
@@ -31,25 +31,25 @@ test('Default properties', function() {
     'transitionDuration'
   ];
 
-  expect(9);
+  assert.expect(9);
 
   properties.forEach(function(key) {
-    strictEqual(controller.get(key), null,
+    assert.strictEqual(controller.get(key), null,
       key + ' should be null');
   });
 
   options.forEach(function(option) {
-    ok(controller.get(option),
+    assert.ok(controller.get(option),
       'Should have a default value for the ' + option + ' option');
   });
 
-  ok(controller.get('_previousRelationships'),
+  assert.ok(controller.get('_previousRelationships'),
     'Should have a _previousRelationships property');
 
 });
 
 
-test('Animation methods', function() {
+test('Animation methods', function(assert) {
 
   isFunction(controller.hide,
     'Should have a hide method');

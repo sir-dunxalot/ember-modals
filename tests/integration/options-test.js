@@ -1,6 +1,7 @@
 import defaultFor from 'ember-modals/utils/default-for';
 import Em from 'ember';
 import { test } from 'ember-qunit';
+import { module } from 'qunit';
 import startApp from '../helpers/start-app';
 import {
   checkController,
@@ -139,16 +140,16 @@ variationsToTest.forEach(function(variation) {
 
   /* Run the test */
 
-  test(description, function() {
+  test(description, function(assert) {
 
-    expect(6);
+    assert.expect(6);
 
     visit(route);
 
     showModal(variation.options, variation.renderingOptions);
 
     andThen(function() {
-      testModal(variation.options, variation.renderingOptions);
+      testModal(assert, variation.options, variation.renderingOptions);
     });
   });
 });

@@ -1,5 +1,4 @@
 import Em from 'ember';
-import defaultFor from '../utils/default-for';
 
 export default {
   name: 'modals',
@@ -7,45 +6,7 @@ export default {
   initialize: initialize
 };
 
-export function initialize(container, app) {
-  var applicationRoute = container.lookup('route:application');
-
-  if (applicationRoute) {
-    applicationRoute.reopen({
-
-      /* You shouldn't need to call these aciton directly. Use
-      show() and hide() on the modal controller */
-
-      _actions: {
-        renderModal: function(options) {
-          var templateName = options.template;
-
-          /* Assert the template exists */
-
-          Em.assert('Could not render the modal because no template was found with the name ' + templateName,
-            container.has('template:' + templateName));
-
-          /* Default to route's controller */
-
-          options.controller = defaultFor(
-            options.controller,
-            this.get('controller.currentRouteName')
-          );
-
-          this.render(templateName, options);
-        },
-
-        removeModal: function(outlet, parentView) {
-          this.disconnectOutlet({
-            outlet: outlet,
-            parentView: parentView
-          });
-        }
-      },
-    });
-  } else {
-    Em.warn('Application route was not found so it\'s action hash was not reopened. If you are in a unit test you can ignore this warning.');
-  }
+export function initialize(/* container, app */) {
 
   Em.ControllerMixin.reopen({
     modal: Em.computed.alias('controllers.modal'),

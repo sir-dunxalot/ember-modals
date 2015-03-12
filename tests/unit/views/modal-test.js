@@ -14,9 +14,9 @@ moduleFor('view:modal', 'Modals - Modal View', {
 });
 
 
-test('Event triggers', function() {
+test('Event triggers', function(assert) {
 
-  ok(view.on,
+  assert.ok(view.on,
     'Em.Evented should be mixed in');
 
   isFunction(view.on,
@@ -25,15 +25,15 @@ test('Event triggers', function() {
 });
 
 
-test('Visuals', function() {
+test('Visuals', function(assert) {
 
-  equal(view.get('layoutName'), 'modal',
+  assert.equal(view.get('layoutName'), 'modal',
     'Should have default layoutName');
 
-  strictEqual(view.get('outlet'), null,
+  assert.strictEqual(view.get('outlet'), null,
     'Should have an outlet property');
 
-  ok(view.get('overlayClassName'),
+  assert.ok(view.get('overlayClassName'),
     'Should have a default overlayClassName');
 
   isFunction(view.show,
@@ -48,41 +48,41 @@ test('Visuals', function() {
   typeOf(view.get('visible'), 'boolean',
     'visible should be a boolean property');
 
-  strictEqual(view.get('visible'), false,
+  assert.strictEqual(view.get('visible'), false,
     'visible should default to false');
 
   view.show();
 
-  strictEqual(view.get('visible'), true,
+  assert.strictEqual(view.get('visible'), true,
     'visible should be true after calling show()');
 
   view.hide();
 
-  strictEqual(view.get('visible'), false,
+  assert.strictEqual(view.get('visible'), false,
     'visible should be false after calling hide()');
 
 });
 
 
-test('Usability', function() {
+test('Usability', function(assert) {
 
-  ok(view.get('ariaHidden'),
+  assert.ok(view.get('ariaHidden'),
     'ariaHidden should be a property');
 
   contains(view.get('attributeBindings'), 'ariaHidden:aria-hidden',
     'ariaHidden should be bound to attributes as aria-hidden');
 
-  strictEqual(view.get('ariaHidden'), 'true',
+  assert.strictEqual(view.get('ariaHidden'), 'true',
     "ariaHidden should be 'true' by default");
 
   view.show();
 
-  strictEqual(view.get('ariaHidden'), 'false',
+  assert.strictEqual(view.get('ariaHidden'), 'false',
     "ariaHidden should be 'false' after calling show()");
 
   view.hide();
 
-  strictEqual(view.get('ariaHidden'), 'true',
+  assert.strictEqual(view.get('ariaHidden'), 'true',
     "ariaHidden should be 'true' after calling hide()");
 
   isFunction(view.autofocus,
