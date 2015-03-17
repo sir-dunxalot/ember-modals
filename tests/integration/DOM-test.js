@@ -166,3 +166,21 @@ test('Close button', function(assert) {
   });
 
 });
+
+
+test('Clicking modal overlay', function(assert) {
+
+  visit('/');
+
+  showModal(templateName);
+
+  asyncClick('overlay');
+
+  andThen(function() {
+
+    assert.ok(!inspect('close', false),
+      'Clicking the modal overlay should remove modal layout from DOM');
+
+  });
+
+});
