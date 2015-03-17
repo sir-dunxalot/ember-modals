@@ -43,6 +43,20 @@ export default Em.View.extend(
     }
   },
 
+  click: function(event) {
+    var _this = this;
+    var classNames = [this.get('overlayClassName'), 'modal_wrapper'];
+    var targetElement = $(event.target);
+
+    Em.$.each(classNames, function(i, className) {
+      if (targetElement.hasClass(className)) {
+        _this.get('controller').send('closeModal', _this.get('outlet'));
+
+        return false; // Break loop
+      }
+    });
+  },
+
   setTransitionDuration: function() {
     var modal = this.$('[role="dialog"]');
     var ms = parseFloat(modal.css('transition-duration')) * 1000;
