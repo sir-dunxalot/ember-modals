@@ -16,11 +16,6 @@
 }
 
 .overlay button {
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0;
-
   font-family: inherit;
   font-weight: inherit;
   text-rendering: inherit;
@@ -30,6 +25,10 @@
 }
 
 .modal .close {
+  border: none;
+  outline: none;
+  background: transparent;
+
   cursor: pointer;
   position: absolute;
   top: 0;
