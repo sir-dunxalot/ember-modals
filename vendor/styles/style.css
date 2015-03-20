@@ -27,35 +27,35 @@
 .modal .close {
   border: none;
   outline: none;
-  background: transparent;
-
   cursor: pointer;
+  background: transparent;
   position: absolute;
   top: 0;
   right: 0;
   padding: 20px;
-}
 
-.modal .icon-close {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 0.5;
-  text-shadow: 0 1px 0 #ffffff;
-  text-decoration: none;
-}
-
-.modal .close {
   color: #000000;
   transition: opacity 0.3s;
   opacity: 0.2;
   filter: alpha(opacity=20);
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 0.5;
 }
 
 .modal .close:hover {
   opacity: 0.4;
   filter: alpha(opacity=40);
+}
+
+.icon-close:before {
+  content: '\00D7';
+}
+
+.modal .icon-close {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  text-decoration: none;
 }
 
 .modal .hidden {
