@@ -7,6 +7,16 @@ Ember Modals [![Build Status](https://travis-ci.org/sir-dunxalot/ember-modals.sv
 ember install:addon ember-modals
 ```
 
+### Features:
+
+- Complete control over the context your modals renders in
+- By default modals will render in the context of the current route
+- Use multiple outlets with different modal views and overlays
+- Action handling enables you to interact with modals from different areas of your app
+- Easily customize animations (JS or CSS)
+- Show multiple modals at the same time
+- Import stylesheets for layout and animation
+
 Please note, there may be backwards incompatible changes before v1.0.0.
 
 
@@ -31,6 +41,5 @@ If you have any issues or feature requests, please [open an issue](https://githu
 - Expose a `resetModal()` method to reset default properties
 - More Browser support for included stylesheets
 - Test(s) for animation duration of modals
-- Clicking on the overlay should close the modal
 - Hitting esc should close the modal
 - Online demo
