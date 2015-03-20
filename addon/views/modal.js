@@ -74,8 +74,10 @@ export default Em.View.extend(
   /* Private methods */
 
   _listen: function() {
-    this.get('controller.modal').on('closeModal', this, function() {
-      var outletBeingClosed = this.get('controller.modal._outletBeingClosed');
+    var modalController = this.get('controller.modal');
+
+    modalController.on('closeModal', this, function() {
+      var outletBeingClosed = modalController.get('_outletBeingClosed');
       var shouldCloseOutlet = outletBeingClosed === this.get('outlet');
 
       if (!this.get('isDestroying') && shouldCloseOutlet) {

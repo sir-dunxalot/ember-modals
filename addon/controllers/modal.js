@@ -32,10 +32,11 @@ export default Em.ObjectController.extend(
   hide: function(outlet) {
     var parentView;
 
+    outlet = defaultFor(outlet, this.get('defaultOutlet'));
+
     this.set('_outletBeingClosed', outlet);
     this.trigger('closeModal'); // Start close animation
 
-    outlet = defaultFor(outlet, this.get('defaultOutlet'));
     parentView = this.get('_previousRelationships.' + outlet);
 
     Em.run.later(this, function() {
