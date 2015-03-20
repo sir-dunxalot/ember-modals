@@ -1,7 +1,9 @@
 Ember Modals [![Build Status](https://travis-ci.org/sir-dunxalot/ember-modals.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-modals) [![Ember Addon](https://s3.amazonaws.com/images.jebbit.com/ember/badge.svg)](http://www.emberaddons.com)
 ======
 
-`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. The primary purpose of this addon is to manage modal functionality in your JS whilst getting out of the way for styling and templating, allowing you to match your styleguide and mockups precisely. However, basic stylesheets and animations are included and may be optionally imported.
+`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. The primary purpose of this addon is to manage modal functionality in your JS whilst getting out of the way for styling and templating.
+
+This allows you to match your styleguide and mockups precisely. However, basic stylesheets and animations are included and may be imported.
 
 ```
 ember install:addon ember-modals
@@ -27,7 +29,9 @@ Documentation, including setup, usage, customization, styling/animating, and dev
 
 ## Demo
 
-In absence of an online demo (WIP), you can clone this repo to your desktop and run `ember s`. You will see a lot of buttons that allow you to show preset modals. Each modal contains info about the context in which it's rendered. The demo uses the `'scale'` animation (see [styling](https://github.com/sir-dunxalot/ember-modals/wiki/Styling) for more info).
+In absence of an online demo (WIP), you can clone this repo to your desktop and run `ember s`. You will see a lot of buttons that allow you to show preset modals. Each modal contains info about the context in which it's rendered.
+
+The demo uses the `'scale'` animation (see [styling](https://github.com/sir-dunxalot/ember-modals/wiki/Styling) for more info).
 
 
 ## Issues
