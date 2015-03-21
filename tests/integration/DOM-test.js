@@ -6,6 +6,7 @@ import { module } from 'qunit';
 var App, container;
 var templateName = 'modals/modal-one';
 var templateNameTwo = 'modals/modal-two';
+var escapeKeyCode = 27;
 
 module('Modals - DOM', {
 
@@ -183,4 +184,18 @@ test('Clicking modal overlay', function(assert) {
 
   });
 
+});
+
+test('Pressing escape', function(assert) {
+
+  visit('/');
+
+  showModal(templateName);
+
+  // keyEvent('body', 'keydown', escapeKeyCode); // this doesn't work :(
+
+  // andThen(function() {
+  //   assert.ok(!inspect('close', false),
+  //     'Pressing escape key should remove modal layout from DOM');
+  // });
 });

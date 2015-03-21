@@ -17,6 +17,7 @@ export default Em.View.extend(
   dataTest: 'modal-overlay',
   transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
   visible: false,
+  escapeKeyCode: 27,
 
   outlet: function() {
     return this.get('_parentView.name');
@@ -32,6 +33,23 @@ export default Em.View.extend(
   show: function() {
     this.set('visible', true);
   },
+
+  /* Hide with Escape */
+  turnOnEscapeEvent: function() {
+    var _this = this;
+
+    this.set('keydownListener', function(event) {
+      if (event.which == _this.escapeKeyCode) {
+        _this.get('controller').send('closeModal', _this.get('outlet'));
+      }
+    });
+
+    Em.$('body').on('keydown', this.get('keydownListener'));
+  }.on('didInsertElement'),
+
+  turnOffEscapeEvent: function() {
+    Em.$('body').off('keydown', this.get('keydownListener'));
+  }.on('willDestroyElement'),
 
   /* Misc methods */
 
