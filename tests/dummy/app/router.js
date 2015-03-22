@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('array-controller');
+  this.route('auto-show');
 
   this.resource('info', function() {
     this.route('about');

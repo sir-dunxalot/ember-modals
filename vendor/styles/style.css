@@ -34,13 +34,15 @@
   right: 0;
   padding: 20px;
 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  line-height: 0.5;
+  font-size: 36px;
   color: #000000;
+
   transition: opacity 0.3s;
   opacity: 0.2;
   filter: alpha(opacity=20);
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 0.5;
 }
 
 .modal .close:hover {
@@ -53,7 +55,6 @@
 }
 
 .modal .icon-close {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: center;
   text-decoration: none;
 }

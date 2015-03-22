@@ -79,16 +79,17 @@ test('Application route', function(assert) {
       template: templateName
     });
 
-    assert.ok(actionHandled,
-      'The renderModal action should call render');
+    Em.run.next(function() {
+      assert.ok(actionHandled,
+        'The renderModal action should call render');
 
-    resetAction();
+      resetAction();
 
-    route.send('removeModal');
+      route.send('removeModal');
 
-    assert.ok(actionHandled,
-      'The removeModal action should call disconnectOutlet');
-
+      assert.ok(actionHandled,
+        'The removeModal action should call disconnectOutlet');
+    });
   });
 });
 
@@ -146,9 +147,8 @@ test('Array controllers', function(assert) {
   });
 });
 
-/* We will run showTests and closeTests twice (once for actions
-and once for calling the hide() and show() methods directly) so
-we specify them as variables */
+/* Checks showModal sends the correct options to the
+application route */
 
 var showTests = function(assert) {
 
@@ -160,6 +160,8 @@ var showTests = function(assert) {
 
 };
 
+/* Checks a modal closes at the correct time and is subsequently
+removed from the DOM */
 
 var closeTests = function(assert, modal) {
 
@@ -215,13 +217,15 @@ test('Action routing', function(assert) {
     modal.set('template', templateName);
     modal.show();
 
-    showTests(assert);
-    resetAction();
+    Em.run.next(this, function() {
+      showTests(assert);
+      resetAction();
 
-    modal.hide();
+      modal.hide();
 
-    closeTests(assert, modal);
-    resetAction();
+      closeTests(assert, modal);
+      resetAction();
+    });
 
   });
 
@@ -238,27 +242,40 @@ test('Action routing', function(assert) {
 
 });
 
+/* Checks the modal controller's constructor is correct, given
+no controller is passed to showModal and a current route name */
+
+var constructorTests = function(assert, currentRouteName) {
+  var controller = container.lookup('controller:' + currentRouteName);
+  var constructor = controller.get('constructor').toString();
+
+  assert.equal(inspect('controller_constructor').text().trim(), constructor,
+    'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
+
+};
 
 test('Default controller - string argument', function(assert) {
+  assert.expect(2);
 
   visit('array-controller');
 
   showModal(templateName);
 
   andThen(function() {
-    var routeName = currentRouteName();
-    var controller = container.lookup('controller:' + routeName);
-    var constructor = controller.get('constructor').toString();
+    constructorTests(assert, currentRouteName());
+  });
 
-    assert.equal(inspect('controller_constructor').text().trim(), constructor,
-      'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
+  visit('auto-show');
 
+  andThen(function() {
+    constructorTests(assert, currentRouteName());
   });
 
 });
 
 
 test('Default controller - object argument', function(assert) {
+  assert.expect(2);
 
   visit('array-controller');
 
@@ -267,12 +284,12 @@ test('Default controller - object argument', function(assert) {
   });
 
   andThen(function() {
-    var routeName = currentRouteName();
-    var controller = container.lookup('controller:' + routeName);
-    var constructor = controller.get('constructor').toString();
+    constructorTests(assert, currentRouteName());
+  });
 
-    assert.equal(inspect('controller_constructor').text().trim(), constructor,
-      'When no controllerName is passed, the modal template\'s controller should default to the route\'s controller');
+  visit('auto-show');
 
+  andThen(function() {
+    constructorTests(assert, currentRouteName());
   });
 });
