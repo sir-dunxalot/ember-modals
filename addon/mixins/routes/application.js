@@ -16,14 +16,18 @@ export default Ember.Mixin.create({
       Ember.assert('Could not render the modal because no template was found with the name ' + templateName,
         this.container.has('template:' + templateName));
 
-      /* Default to route's controller */
+      /* Default to route's controller. We do this inside the run loop incase the modal is being rendered before currentRouteName is set */
 
-      options.controller = defaultFor(
-        options.controller,
-        this.get('controller.currentRouteName')
-      );
+      Ember.run.next(this, function() {
 
-      this.render(templateName, options);
+        options.controller = defaultFor(
+          options.controller,
+          this.get('controller.currentRouteName')
+        );
+
+        this.render(templateName, options);
+
+      });
     },
 
     removeModal: function(outlet, parentView) {
