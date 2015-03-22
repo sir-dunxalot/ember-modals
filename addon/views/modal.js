@@ -12,12 +12,13 @@ export default Em.View.extend(
   /* Properties */
 
   ariaHidden: ifElse('visible', 'false', 'true'), // Set as strings
-  attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test'],
+  attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test', 'tabIndex:tabindex'],
   classNameBindings: ['overlayClassName', 'visible'],
   dataTest: 'modal-overlay',
   transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
   visible: false,
   escapeKeyCode: 27,
+  tabIndex: 1,
 
   outlet: function() {
     return this.get('_parentView.name');
@@ -34,22 +35,11 @@ export default Em.View.extend(
     this.set('visible', true);
   },
 
-  /* Hide with Escape */
-  turnOnEscapeEvent: function() {
-    var _this = this;
-
-    this.set('keydownListener', function(event) {
-      if (event.which == _this.escapeKeyCode) {
-        _this.get('controller').send('closeModal', _this.get('outlet'));
-      }
-    });
-
-    Em.$('body').on('keydown', this.get('keydownListener'));
-  }.on('didInsertElement'),
-
-  turnOffEscapeEvent: function() {
-    Em.$('body').off('keydown', this.get('keydownListener'));
-  }.on('willDestroyElement'),
+  closeWithEscape: function(event) {
+    if (event.which === this.escapeKeyCode) {
+      this.get('controller').send('closeModal', this.get('outlet'));
+    }
+  }.on('keyDown'),
 
   /* Misc methods */
 
@@ -58,6 +48,8 @@ export default Em.View.extend(
 
     if (inputs.length) {
       inputs[0].focus();
+    } else {
+      this.$().focus();
     }
   },
 

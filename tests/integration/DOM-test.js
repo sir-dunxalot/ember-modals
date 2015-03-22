@@ -192,10 +192,12 @@ test('Pressing escape', function(assert) {
 
   showModal(templateName);
 
-  // keyEvent('body', 'keydown', escapeKeyCode); // this doesn't work :(
+  andThen(function() {
+    keyEvent(inspect('overlay'), 'keydown', escapeKeyCode);
 
-  // andThen(function() {
-  //   assert.ok(!inspect('close', false),
-  //     'Pressing escape key should remove modal layout from DOM');
-  // });
+    andThen(function() {
+      assert.ok(!inspect('close', false),
+        'Pressing escape key should remove modal layout from DOM');
+    });
+  });
 });
