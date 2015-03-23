@@ -18,16 +18,13 @@ export default Ember.Mixin.create({
 
       /* Default to route's controller. We do this inside the run loop incase the modal is being rendered before currentRouteName is set */
 
-      Ember.run.next(this, function() {
 
-        options.controller = defaultFor(
-          options.controller,
-          this.get('controller.currentRouteName')
-        );
+      options.controller = defaultFor(
+        options.controller,
+        this.get('controller.currentRouteName')
+      );
 
-        this.render(templateName, options);
-
-      });
+      this.render(templateName, options);
     },
 
     removeModal: function(outlet, parentView) {

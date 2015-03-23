@@ -79,17 +79,15 @@ test('Application route', function(assert) {
       template: templateName
     });
 
-    Em.run.next(function() {
-      assert.ok(actionHandled,
-        'The renderModal action should call render');
+    assert.ok(actionHandled,
+      'The renderModal action should call render');
 
-      resetAction();
+    resetAction();
 
-      route.send('removeModal');
+    route.send('removeModal');
 
-      assert.ok(actionHandled,
-        'The removeModal action should call disconnectOutlet');
-    });
+    assert.ok(actionHandled,
+      'The removeModal action should call disconnectOutlet');
   });
 });
 
@@ -217,15 +215,13 @@ test('Action routing', function(assert) {
     modal.set('template', templateName);
     modal.show();
 
-    Em.run.next(this, function() {
-      showTests(assert);
-      resetAction();
+    showTests(assert);
+    resetAction();
 
-      modal.hide();
+    modal.hide();
 
-      closeTests(assert, modal);
-      resetAction();
-    });
+    closeTests(assert, modal);
+    resetAction();
 
   });
 

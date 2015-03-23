@@ -4,7 +4,9 @@ export default Ember.Route.extend({
 
   actions: {
     didTransition: function() {
-      this.get('controller').showModal('modals/modal-one');
+      Ember.run.next(this, function() {
+        this.get('controller').showModal('modals/modal-one');
+      });
     }
   }
 
