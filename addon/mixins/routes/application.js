@@ -33,7 +33,7 @@ export default Ember.Mixin.create({
       });
 
       // Check if another modal exists then give it focus
-      Ember.run.later(function() {
+      Ember.run.next(function() {
         var remainingViewElement = Ember.$('[role="dialog"]:last-child').closest('.ember-view');
         remainingViewElement.removeAttr('tabindex').attr('tabindex', 1);
         remainingViewElement.focus();
