@@ -1,7 +1,7 @@
 import Em from 'ember';
 import defaultFor from 'ember-modals/utils/default-for';
 
-export default Em.ObjectController.extend(
+export default Em.Controller.extend(
   Em.Evented, {
 
   /* Options - best set by extending this controller */
