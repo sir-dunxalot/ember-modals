@@ -14,7 +14,7 @@ export default Ember.Mixin.create({
       /* Assert the template exists */
 
       Ember.assert('Could not render the modal because no template was found with the name ' + templateName,
-        this.container.has('template:' + templateName));
+        this.container._registry.has('template:' + templateName));
 
       /* Default to route's controller. We do this inside the run loop incase the modal is being rendered before currentRouteName is set */
 
