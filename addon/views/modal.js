@@ -55,7 +55,7 @@ export default Em.View.extend(
 
   click: function(event) {
     var _this = this;
-    var classNames = [this.get('overlayClassName'), 'modal_wrapper'];
+    var classNames = [this.get('overlayClassName'), 'modal-wrapper'];
     var targetElement = Em.$(event.target);
 
     Em.$.each(classNames, function(i, className) {
