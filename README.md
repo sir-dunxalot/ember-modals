@@ -1,4 +1,5 @@
 Ember Modals [![Build Status](https://travis-ci.org/sir-dunxalot/ember-modals.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-modals)
+======
 
 `ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. The primary purpose of this addon is to manage modal functionality in your JS whilst getting out of the way for styling and templating.
 
