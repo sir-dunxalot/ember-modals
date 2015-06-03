@@ -1,5 +1,5 @@
 import Em from 'ember';
 
-export default Em.ObjectController.extend({
+export default Em.Controller.extend({
 
 });
