@@ -6,18 +6,18 @@ import {
 
 setResolver(resolver);
 
-QUnit.extend(QUnit, {
+window.QUnit.extend(window.QUnit, {
 
   contains: function(arrayOrString, item, message) {
-    QUnit.assert.ok(arrayOrString.indexOf(item) > -1, message);
+    window.QUnit.assert.ok(arrayOrString.indexOf(item) > -1, message);
   },
 
   isFunction: function(name, message) {
-    QUnit.assert.equal(Ember.typeOf(name), 'function', message);
+    window.QUnit.assert.equal(Ember.typeOf(name), 'function', message);
   },
 
   typeOf: function(name, type, message) {
-    QUnit.assert.equal(Ember.typeOf(name), type, message);
+    window.QUnit.assert.equal(Ember.typeOf(name), type, message);
   },
 
 });
