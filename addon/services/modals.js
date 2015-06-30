@@ -1,15 +1,17 @@
 import Ember from 'ember';
 import defaultFor from 'ember-modals/utils/default-for';
 
-export default Ember.Controller.extend(
+const { run } = Ember;
+
+export default Ember.Service.extend(
   Ember.Evented, {
 
   /* Options - best set by extending this controller */
 
+  animationDuration: 500, // Fallback from CSS value
   defaultView: 'modal',
   defaultOutlet: 'modal',
   defaultParentView: 'application',
-  transitionDuration: 500, // Fallback from CSS value
 
   /* Properties - best set using showModal() */
 
@@ -21,7 +23,7 @@ export default Ember.Controller.extend(
   _outletBeingClosed: null,
 
   /**
-  Triggers the animation to hide the modal. Once the `transitionDuration` has passed the action to remove the outlet will be triggered.
+  Triggers the animation to hide the modal. Once the `animationDuration` has passed the action to remove the outlet will be triggered.
 
   If the outlet is not provided, the `defaultOutlet` property will be used. Whe using a modal other than the default you should always pass the outlet name.
 
@@ -39,10 +41,10 @@ export default Ember.Controller.extend(
 
     parentView = this.get('_previousRelationships.' + outlet);
 
-    Ember.run.later(this, function() {
+    run.later(this, function() {
       this.set('_outletBeingClosed', null);
       this.send('removeModal', outlet, parentView);
-    }, this.get('transitionDuration'));
+    }, this.get('animationDuration'));
   },
 
   /**

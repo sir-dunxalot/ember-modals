@@ -1,12 +1,9 @@
 import Ember from 'ember';
-import ifElse from 'ember-modals/utils/computed/if-else';
+import layout from '../templates/components/modal-overlay';
 
-const {
-  computed,
-  $,
-} = Ember;
+const { computed } = Ember;
 
-export default Ember.View.extend(
+export default Ember.Component.extend(
   Ember.Evented, {
 
   /* Options */
@@ -20,14 +17,21 @@ export default Ember.View.extend(
   attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test', 'tabIndex:tabindex'],
   classNameBindings: ['overlayClassName', 'visible'],
   dataTest: 'modal-overlay',
-  transitionDuration: computed.alias('controller.modal.transitionDuration'),
-  visible: false,
   escapeKeyCode: 27,
+  transitionDuration: computed.alias('controller.modal.transitionDuration'),
+  layout: layout,
   tabIndex: 1,
+  visible: false,
 
-  outlet: Ember.computed(function() {
+  outlet: computed(function() {
     return this.get('_parentView.name');
   }),
+
+  actions: {
+    closeModal: function(outlet) {
+      this.get('modal').hide(outlet);
+    }
+  },
 
   /* Animation methods. If you override these, call this._super()
   in the methods to ensure properties are set correctly */
@@ -42,7 +46,7 @@ export default Ember.View.extend(
 
   closeWithEscape: Ember.on('keyDown', function(event) {
     if (event.which === this.escapeKeyCode) {
-      this.get('controller').send('closeModal', this.get('outlet'));
+      this.send('closeModal', this.get('outlet'));
     }
   }),
 
@@ -64,7 +68,7 @@ export default Ember.View.extend(
 
     $.each(classNames, function(i, className) {
       if (targetElement.hasClass(className)) {
-        this.get('controller').send('closeModal', _this.get('outlet'));
+        this.send('closeModal', _this.get('outlet'));
 
         return false; // Break loop
       }
@@ -88,10 +92,10 @@ export default Ember.View.extend(
   /* Private methods */
 
   _listen: Ember.on('willInsertElement', function() {
-    const modalController = this.get('controller.modal');
+    const modalService = this.get('modal');
 
-    modalController.on('closeModal', this, function() {
-      const outletBeingClosed = modalController.get('_outletBeingClosed');
+    modalService.on('closeModal', this, function() {
+      const outletBeingClosed = modalService.get('_outletBeingClosed');
       const shouldCloseOutlet = outletBeingClosed === this.get('outlet');
 
       if (!this.get('isDestroying') && shouldCloseOutlet) {
