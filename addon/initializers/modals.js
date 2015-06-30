@@ -1,15 +1,14 @@
-import Em from 'ember';
+import Ember from 'ember';
 
-export default {
-  name: 'modals',
-
-  initialize: initialize
-};
+const {
+  assert,
+  computed,
+} = Ember;
 
 export function initialize(/* container, app */) {
 
-  Em.ControllerMixin.reopen({
-    modal: Em.computed.alias('controllers.modal'),
+  Ember.ControllerMixin.reopen({
+    modal: computed.alias('controllers.modal'),
     needs: ['modal'],
 
     _actions: {
@@ -19,14 +18,14 @@ export function initialize(/* container, app */) {
     },
 
     showModal: function(options, renderingOptions) {
-      var modal = this.get('modal');
-      var optionsIsString = Em.typeOf(options) === 'string';
+      const modal = this.get('modal');
+      const optionsIsString = Ember.typeOf(options) === 'string';
 
       if (!options) {
-        Em.assert('You must pass options or a template name to the showModal() method');
+        assert('You must pass options or a template name to the showModal() method');
       } else {
-        Em.assert('You can\'t show a modal without a template name',
-          optionsIsString || options['template']);
+        assert('You can\'t show a modal without a template name',
+          optionsIsString || options.template);
       }
 
       /* If options are passed together as a single object... */
@@ -34,14 +33,16 @@ export function initialize(/* container, app */) {
       if (optionsIsString) {
         modal.set('template', options);
       } else {
-        modal.set('template', options['template']);
+        modal.set('template', options.template);
       }
 
       /* Sets value to undefined if they're not set */
 
-      modal.set('controller', options['controller']);
-      modal.set('model', options['model']);
-      modal.set('view', options['view']);
+      modal.setProperties({
+        controller: options.controller,
+        model: options.model,
+        view: options.view,
+      });
 
       /* Auto-call the show function to do rendering */
 
@@ -50,3 +51,8 @@ export function initialize(/* container, app */) {
 
   });
 }
+
+export default {
+  name: 'modals',
+  initialize: initialize
+};

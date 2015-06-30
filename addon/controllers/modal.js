@@ -1,8 +1,8 @@
-import Em from 'ember';
+import Ember from 'ember';
 import defaultFor from 'ember-modals/utils/default-for';
 
-export default Em.Controller.extend(
-  Em.Evented, {
+export default Ember.Controller.extend(
+  Ember.Evented, {
 
   /* Options - best set by extending this controller */
 
@@ -29,8 +29,8 @@ export default Em.Controller.extend(
   @param [outlet] String The name of the outlet to remove the modal from. Defaults to defaultOutlet
   */
 
-  hide: function(outlet) {
-    var parentView;
+  hide(outlet) {
+    const parentView;
 
     outlet = defaultFor(outlet, this.get('defaultOutlet'));
 
@@ -39,7 +39,7 @@ export default Em.Controller.extend(
 
     parentView = this.get('_previousRelationships.' + outlet);
 
-    Em.run.later(this, function() {
+    Ember.run.later(this, function() {
       this.set('_outletBeingClosed', null);
       this.send('removeModal', outlet, parentView);
     }, this.get('transitionDuration'));
@@ -54,15 +54,14 @@ export default Em.Controller.extend(
   @param [renderingOptions] Object The `outlet` and `parentView` to render the modal into.
   */
 
-  show: function(renderingOptions) {
-    var previousRelationships = this.get('_previousRelationships');
-    var options, previousParentView;
-
-    renderingOptions = defaultFor(renderingOptions, {});
-
-    options = {
-      controller: this.get('controller'),
-      template: this.get('template'),
+  show(renderingOptions = {}) {
+    const previousRelationships = this.get('_previousRelationships');
+    const { controller, template, view } = this.getProperties(
+      [ 'controller', 'template', 'view' ]
+    );
+    const options = {
+      controller,
+      template,
       outlet: defaultFor(
         renderingOptions.outlet,
         this.get('defaultOutlet')
@@ -72,7 +71,7 @@ export default Em.Controller.extend(
         this.get('defaultParentView')
       ),
       view: defaultFor(
-        this.get('view'),
+        view,
         this.get('defaultView')
       )
     };
@@ -81,10 +80,10 @@ export default Em.Controller.extend(
     parent view so we can easily hide outlets in a route's
     view later */
 
-    previousParentView = previousRelationships.get(options.outlet);
+    const previousParentView = previousRelationships.get(options.outlet);
 
     if (previousParentView && previousParentView !== options.into) {
-      Em.warn('You should not use the same named outlet in different views with ember-modals. Behaviour will be unexpected.');
+      Ember.warn('You should not use the same named outlet in different views with ember-modals. Behaviour will be unexpected.');
     }
 
     previousRelationships.set(options.outlet, options.into);
@@ -92,6 +91,6 @@ export default Em.Controller.extend(
     this.send('renderModal', options);
   },
 
-  _previousRelationships: Em.Object.create(),
+  _previousRelationships: Ember.Object.create(),
 
 });

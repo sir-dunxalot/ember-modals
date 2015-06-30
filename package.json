@@ -1,7 +1,7 @@
 {
   "name": "ember-modals",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.5.0",
+  "description": "An Ember addon that adds API-like functionality for rendering and managing modals in your Ember application",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/sir-dunxalot/ember-modals",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -23,7 +23,6 @@
     "ember-cli-app-version": "0.3.3",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "^1.0.0",
-    "ember-cli-htmlbars": "0.7.6",
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "0.3.13",
@@ -35,10 +34,15 @@
     "ember-try": "0.0.6"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "modal",
+    "modals",
+    "dialog"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.0.0"
+    "ember-cli-babel": "^5.0.0",
+    "ember-cli-htmlbars": "0.7.6"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

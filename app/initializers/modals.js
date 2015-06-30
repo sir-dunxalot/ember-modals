@@ -1,3 +1,1 @@
-import Initializer from 'ember-modals/initializers/modals';
-
-export default Initializer;
+export { default } from 'ember-modals/initializers/modals';

@@ -9,7 +9,7 @@ export default Ember.Mixin.create({
   actions: {
 
     renderModal: function(options) {
-      var templateName = options.template;
+      const templateName = options.template;
 
       /* Assert the template exists */
 
@@ -35,7 +35,8 @@ export default Ember.Mixin.create({
 
       // Check if another modal exists then give it focus
       Ember.run.next(function() {
-        var remainingViewElement = Ember.$('[role="dialog"]:last-child').closest('.ember-view');
+        const remainingViewElement = Ember.$('[role="dialog"]:last-child').closest('.ember-view');
+
         remainingViewElement.removeAttr('tabindex').attr('tabindex', 1);
         remainingViewElement.focus();
       });

@@ -7,7 +7,7 @@
 */
 
 export default function(dependentKey, ifTrue, ifFalse) {
-  return function() {
+  return Ember.computed(dependentKey, function() {
     return this.get(dependentKey) ? ifTrue : ifFalse;
-  }.property(dependentKey);
+  });
 }

@@ -1,8 +1,13 @@
-import Em from 'ember';
+import Ember from 'ember';
 import ifElse from 'ember-modals/utils/computed/if-else';
 
-export default Em.View.extend(
-  Em.Evented, {
+const {
+  computed,
+  $,
+} = Ember;
+
+export default Ember.View.extend(
+  Ember.Evented, {
 
   /* Options */
 
@@ -15,14 +20,14 @@ export default Em.View.extend(
   attributeBindings: ['ariaHidden:aria-hidden', 'aria-label', 'dataTest:data-test', 'tabIndex:tabindex'],
   classNameBindings: ['overlayClassName', 'visible'],
   dataTest: 'modal-overlay',
-  transitionDuration: Em.computed.alias('controller.modal.transitionDuration'),
+  transitionDuration: computed.alias('controller.modal.transitionDuration'),
   visible: false,
   escapeKeyCode: 27,
   tabIndex: 1,
 
-  outlet: function() {
+  outlet: Ember.computed(function() {
     return this.get('_parentView.name');
-  }.property(),
+  }),
 
   /* Animation methods. If you override these, call this._super()
   in the methods to ensure properties are set correctly */
@@ -35,16 +40,16 @@ export default Em.View.extend(
     this.set('visible', true);
   },
 
-  closeWithEscape: function(event) {
+  closeWithEscape: Ember.on('keyDown', function(event) {
     if (event.which === this.escapeKeyCode) {
       this.get('controller').send('closeModal', this.get('outlet'));
     }
-  }.on('keyDown'),
+  }),
 
   /* Misc methods */
 
   autofocus: function() {
-    var inputs = this.$().find('input');
+    const inputs = this.$().find('input');
 
     if (inputs.length) {
       inputs[0].focus();
@@ -54,41 +59,40 @@ export default Em.View.extend(
   },
 
   click: function(event) {
-    var _this = this;
-    var classNames = [this.get('overlayClassName'), 'modal-wrapper'];
-    var targetElement = Em.$(event.target);
+    const classNames = [this.get('overlayClassName'), 'modal-wrapper'];
+    const targetElement = $(event.target);
 
-    Em.$.each(classNames, function(i, className) {
+    $.each(classNames, function(i, className) {
       if (targetElement.hasClass(className)) {
-        _this.get('controller').send('closeModal', _this.get('outlet'));
+        this.get('controller').send('closeModal', _this.get('outlet'));
 
         return false; // Break loop
       }
-    });
+    }, this);
   },
 
-  setTransitionDuration: function() {
-    var modal = this.$('[role="dialog"]');
-    var ms = parseFloat(modal.css('transition-duration')) * 1000;
+  setTransitionDuration: Ember.on('didInsertElement', function() {
+    const modal = this.$('[role="dialog"]');
+    const ms = parseFloat(modal.css('transition-duration')) * 1000;
 
     if (ms) {
       this.set('transitionDuration', ms);
     }
-  }.on('didInsertElement'),
+  }),
 
-  setup: function() {
+  setup: Ember.on('didInsertElement', function() {
     this.show();
     this.autofocus();
-  }.on('didInsertElement'),
+  }),
 
   /* Private methods */
 
-  _listen: function() {
-    var modalController = this.get('controller.modal');
+  _listen: Ember.on('willInsertElement', function() {
+    const modalController = this.get('controller.modal');
 
     modalController.on('closeModal', this, function() {
-      var outletBeingClosed = modalController.get('_outletBeingClosed');
-      var shouldCloseOutlet = outletBeingClosed === this.get('outlet');
+      const outletBeingClosed = modalController.get('_outletBeingClosed');
+      const shouldCloseOutlet = outletBeingClosed === this.get('outlet');
 
       if (!this.get('isDestroying') && shouldCloseOutlet) {
         if (!this.get('isDestroying')) {
@@ -96,6 +100,6 @@ export default Em.View.extend(
         }
       }
     });
-  }.on('willInsertElement'),
+  }),
 
 });
