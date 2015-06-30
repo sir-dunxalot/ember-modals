@@ -8,13 +8,13 @@ export default Ember.Mixin.create({
 
   actions: {
 
-    renderModal: function(options) {
+    renderModal(options) {
       const templateName = options.template;
 
       /* Assert the template exists */
 
       Ember.assert('Could not render the modal because no template was found with the name ' + templateName,
-        this.container.has('template:' + templateName));
+        !!this.get('container').lookup(`template:${templateName}`));
 
       /* Default to route's controller. We do this inside the run loop incase the modal is being rendered before currentRouteName is set */
 
@@ -27,7 +27,7 @@ export default Ember.Mixin.create({
       this.render(templateName, options);
     },
 
-    removeModal: function(outlet, parentView) {
+    removeModal(outlet, parentView) {
       this.disconnectOutlet({
         outlet: outlet,
         parentView: parentView

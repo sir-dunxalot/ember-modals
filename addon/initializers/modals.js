@@ -11,7 +11,7 @@ export function initialize(/* container, app */) {
     Ember[classType].reopen({
       modal: Ember.inject.service('modals'),
 
-      showModal: function(options, renderingOptions) {
+      showModal(options, renderingOptions) {
         const modal = this.get('modal');
         const optionsIsString = Ember.typeOf(options) === 'string';
 

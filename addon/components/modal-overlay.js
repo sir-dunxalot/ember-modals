@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ifElse from 'ember-modals/utils/computed/if-else';
 import layout from '../templates/components/modal-overlay';
 
 const { computed } = Ember;
@@ -18,17 +19,14 @@ export default Ember.Component.extend(
   classNameBindings: ['overlayClassName', 'visible'],
   dataTest: 'modal-overlay',
   escapeKeyCode: 27,
-  transitionDuration: computed.alias('controller.modal.transitionDuration'),
   layout: layout,
+  outlet: computed.oneWay('_parentView.name'),
   tabIndex: 1,
+  transitionDuration: computed.alias('controller.modal.transitionDuration'),
   visible: false,
 
-  outlet: computed(function() {
-    return this.get('_parentView.name');
-  }),
-
   actions: {
-    closeModal: function(outlet) {
+    closeModal(outlet) {
       this.get('modal').hide(outlet);
     }
   },
@@ -36,11 +34,11 @@ export default Ember.Component.extend(
   /* Animation methods. If you override these, call this._super()
   in the methods to ensure properties are set correctly */
 
-  hide: function() {
+  hide() {
     this.set('visible', false);
   },
 
-  show: function() {
+  show() {
     this.set('visible', true);
   },
 
@@ -52,7 +50,7 @@ export default Ember.Component.extend(
 
   /* Misc methods */
 
-  autofocus: function() {
+  autofocus() {
     const inputs = this.$().find('input');
 
     if (inputs.length) {
@@ -62,7 +60,7 @@ export default Ember.Component.extend(
     }
   },
 
-  click: function(event) {
+  click(event) {
     const classNames = [this.get('overlayClassName'), 'modal-wrapper'];
     const targetElement = $(event.target);
 

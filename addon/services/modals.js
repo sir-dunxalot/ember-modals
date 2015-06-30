@@ -9,7 +9,7 @@ export default Ember.Service.extend(
   /* Options - best set by extending this controller */
 
   animationDuration: 500, // Fallback from CSS value
-  defaultView: 'modal',
+  defaultView: 'component:modal-wrapper',
   defaultOutlet: 'modal',
   defaultParentView: 'application',
 
@@ -32,18 +32,18 @@ export default Ember.Service.extend(
   */
 
   hide(outlet) {
-    const parentView;
+    const applicationRoute = this.get('container').lookup('route:application');
 
     outlet = defaultFor(outlet, this.get('defaultOutlet'));
 
     this.set('_outletBeingClosed', outlet);
     this.trigger('closeModal'); // Start close animation
 
-    parentView = this.get('_previousRelationships.' + outlet);
+    const parentView = this.get(`_previousRelationships.${outlet}`);
 
     run.later(this, function() {
       this.set('_outletBeingClosed', null);
-      this.send('removeModal', outlet, parentView);
+      applicationRoute.send('removeModal', outlet, parentView);
     }, this.get('animationDuration'));
   },
 
@@ -57,6 +57,7 @@ export default Ember.Service.extend(
   */
 
   show(renderingOptions = {}) {
+    const applicationRoute = this.get('container').lookup('route:application');
     const previousRelationships = this.get('_previousRelationships');
     const { controller, template, view } = this.getProperties(
       [ 'controller', 'template', 'view' ]
@@ -90,7 +91,7 @@ export default Ember.Service.extend(
 
     previousRelationships.set(options.outlet, options.into);
 
-    this.send('renderModal', options);
+    applicationRoute.send('renderModal', options);
   },
 
   _previousRelationships: Ember.Object.create(),
