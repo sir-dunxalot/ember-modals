@@ -1,3 +1,10 @@
 {{#each modals.modalsInDom as |modal|}}
-  {{component modal.componentName}}
+  {{#ember-modal-overlay}}
+    {{#ember-modal}}
+      {{component modal.componentName
+        modal=modal
+        targetObject=modal.context
+      }}
+    {{/ember-modal}}
+  {{/ember-modal-overlay}}
 {{/each}}

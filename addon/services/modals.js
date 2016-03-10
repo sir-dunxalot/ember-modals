@@ -2,19 +2,23 @@ import Ember from 'ember';
 
 const { RSVP } = Ember;
 
-export default Ember.Service.extend({
+export default Ember.Service.extend(
+  Ember.ActionHandler, {
+
   modalsInDom: null,
 
-  animateHideModal() {
-    return new RSVP.Promise((resolve) => {
-      resolve();
-    });
-  },
+  actions: {
 
-  animateShowModal() {
-    return new RSVP.Promise(() => {
-      resolve();
-    });
+    removeModal(modalObject) {
+      this.get('modalsInDom').removeObject(modalObject);
+    },
+
+    showModal(componentName, context) {
+      this.get('modalsInDom').addObject({
+        componentName,
+        context,
+      });
+    },
   },
 
   clearModals() {
@@ -23,22 +27,7 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    this.modalsInDom = [];
-  },
-
-  hideModal(componentName) {
-    this.animateHideModal().then(() => {
-
-    });
-  },
-
-  showModal(componentName, context) {
-    this.modalsInDom.addObject({
-      componentName,
-      context,
-    });
-    // const container = this.get('container');
-    // const component = container.lookup(`component:${componentName}`);
+    this.modalsInDom = Ember.A();
   },
 
 });
