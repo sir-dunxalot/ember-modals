@@ -2,20 +2,20 @@ import Ember from 'ember';
 import layout from '../templates/components/ember-modal';
 
 const { RSVP, on, run } = Ember;
-const duration = 1000;
+const className = 'ember-modal';
 
 export default Ember.Component.extend({
   ariaRole: 'dialog',
-  attributeBindings: ['hidden:aria-hidden'],
-  classNames: ['ember-modal'],
-  classNameBindings: ['hidden:ember-modal-hidden'],
+  attributeBindings: ['hidden:aria-hidden', 'tabIndex'],
+  classNames: [className],
+  classNameBindings: [`hidden:${className}-hidden`],
   hidden: true,
   layout,
   modal: null,
+  tabIndex: 1,
 
   actions: {
     closeModal() {
-      console.log('here');
       this._hide().then(() => {
         this.modals.send('removeModal', this.get('modal'));
       });
@@ -48,12 +48,12 @@ export default Ember.Component.extend({
     /* wrap in scheduleOnce to avoid setting
     properties in the didInsertElement hook*/
 
-    run.scheduleOnce('afterRender', this, function() {
-      this._show().then(() => {
-        this.$().focus();
-      });
-
+    run.scheduleOnce('afterRender', () => {
       const parentView = this.get('parentView');
+
+      this._show().then(() => {
+        this.$()[0].focus();
+      });
 
       parentView.$().click((event) => {
 
@@ -67,11 +67,11 @@ export default Ember.Component.extend({
     });
   },
 
-  closeWithEscape: on('keyDown', function(event) {
+  keyUp(event) {
     if (event.which === 27) {
       this.send('closeModal');
     }
-  }),
+  },
 
   willDestroy() {
     this.set('ariaHidden', true);
@@ -79,10 +79,8 @@ export default Ember.Component.extend({
 
   _hide() {
     return new RSVP.Promise((resolve) => {
-      // run.next(() => {
-        this.set('hidden', true);
-        this.get('parentView').send('hide');
-      // });
+      this.set('hidden', true);
+      this.get('parentView').send('hide');
 
       this.hide().then(() => {
         resolve();

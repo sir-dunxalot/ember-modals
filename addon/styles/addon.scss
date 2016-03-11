@@ -31,6 +31,7 @@
   padding: 30px;
   min-width: 200px;
   min-height: 100px;
+  outline: none; // For tabindex
 
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
