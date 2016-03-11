@@ -15,6 +15,7 @@ export default Ember.Component.extend({
 
   actions: {
     closeModal() {
+      console.log('here');
       this._hide().then(() => {
         this.modals.send('removeModal', this.get('modal'));
       });
@@ -41,10 +42,28 @@ export default Ember.Component.extend({
     });
   },
 
-  didInsertElement() {
+  didRender() {
     this._super(...arguments);
-    this._show().then(() => {
-      this.$().focus();
+
+    /* wrap in scheduleOnce to avoid setting
+    properties in the didInsertElement hook*/
+
+    run.scheduleOnce('afterRender', this, function() {
+      this._show().then(() => {
+        this.$().focus();
+      });
+
+      const parentView = this.get('parentView');
+
+      parentView.$().click((event) => {
+
+        /* Don't let a click on a child of the overlay
+        close the overlay */
+
+        if (event.target === parentView.get('element')) {
+          this.send('closeModal');
+        }
+      });
     });
   },
 
@@ -60,10 +79,10 @@ export default Ember.Component.extend({
 
   _hide() {
     return new RSVP.Promise((resolve) => {
-      run.next(() => {
+      // run.next(() => {
         this.set('hidden', true);
         this.get('parentView').send('hide');
-      });
+      // });
 
       this.hide().then(() => {
         resolve();

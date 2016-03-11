@@ -16,4 +16,5 @@ export default Ember.Component.extend({
       this.set('hidden', false);
     },
   },
+
 });
