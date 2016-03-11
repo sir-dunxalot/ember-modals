@@ -9,8 +9,8 @@ export default Ember.Service.extend(
 
   actions: {
 
-    removeModal(modalObject) {
-      this.get('modalsInDom').removeObject(modalObject);
+    removeModal(modal) {
+      this.get('modalsInDom').removeObject(modal);
     },
 
     showModal(componentName, context) {
@@ -22,7 +22,7 @@ export default Ember.Service.extend(
   },
 
   clearModals() {
-
+    this.set('modalsInDom', Ember.A());
   },
 
   init() {

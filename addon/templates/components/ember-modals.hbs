@@ -1,9 +1,8 @@
 {{#each modals.modalsInDom as |modal|}}
   {{#ember-modal-overlay}}
-    {{#ember-modal}}
+    {{#ember-modal modal=modal}}
       {{component modal.componentName
-        modal=modal
-        targetObject=modal.context
+        targetObject=(if modal.context modal.context targetObject)
       }}
     {{/ember-modal}}
   {{/ember-modal-overlay}}
