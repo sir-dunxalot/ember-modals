@@ -14,7 +14,7 @@ export default Ember.Service.extend(
     },
 
     showModal(componentName, context) {
-      this.get('modalsInDom').addObject({
+      this.showModal({
         componentName,
         context,
       });
@@ -28,6 +28,28 @@ export default Ember.Service.extend(
   init() {
     this._super(...arguments);
     this.modalsInDom = Ember.A();
+  },
+
+  /**
+  Pass an object  `showModal()` that contains `componentName` (required) plus any numebr of optional params:
+
+  ```js
+  showModal({
+    componentName: 'modals/welcom', // The modal content component
+    context: this, // The targetObject for the modal content component
+    modalClassName: 'modal-warning',
+    overlayClassName: 'overlay-transparent',
+  });
+  ```
+
+  @method showModal
+  @param Object modal The options to render the modal with
+  */
+
+  showModal(modal) {
+    Ember.assert('You must pass componentName on the object passed to showModal', modal.componentName);
+
+    this.get('modalsInDom').addObject(modal);
   },
 
 });
