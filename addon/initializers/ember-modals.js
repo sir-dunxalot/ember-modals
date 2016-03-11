@@ -2,7 +2,7 @@ export function initialize(application) {
 
   /* Inject the modals service into all compoennts and routes */
 
-  ['component', 'route'].forEach((klass) => {
+  ['component', 'controller', 'route'].forEach((klass) => {
     application.inject(klass, 'modals', 'service:modals');
   });
 }

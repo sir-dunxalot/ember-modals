@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   hidden: true,
   layout,
   modal: null,
+  showCloseButton: false,
   tabIndex: 1,
 
   actions: {

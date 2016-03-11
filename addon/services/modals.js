@@ -13,11 +13,22 @@ export default Ember.Service.extend(
       this.get('modalsInDom').removeObject(modal);
     },
 
-    showModal(componentName, context) {
-      this.showModal({
-        componentName,
-        context,
-      });
+    showModal(modal, context) {
+      let modalObject = modal;
+
+      if (Ember.typeOf(modal) === 'string') {
+        modalObject = {
+          componentName: modal,
+        };
+
+        if (context) {
+          modalObject.context = context;
+        }
+      }
+
+      Ember.assert('You must pass componentName on the object passed to showModal', modalObject.componentName);
+
+      this.get('modalsInDom').addObject(modalObject);
     },
   },
 
@@ -45,11 +56,5 @@ export default Ember.Service.extend(
   @method showModal
   @param Object modal The options to render the modal with
   */
-
-  showModal(modal) {
-    Ember.assert('You must pass componentName on the object passed to showModal', modal.componentName);
-
-    this.get('modalsInDom').addObject(modal);
-  },
 
 });

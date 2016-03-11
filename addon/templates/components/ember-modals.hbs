@@ -11,11 +11,13 @@
     {{#ember-modal
       class=modal.modalClassName
       modal=modal
+      showCloseButton=modal.showCloseButton
     }}
 
       {{!-- Modal content --}}
 
       {{component modal.componentName
+        modal=modal
         targetObject=(if modal.context modal.context targetObject)
       }}
 
