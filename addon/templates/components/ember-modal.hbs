@@ -1,8 +1,5 @@
-{{#if showCloseButton}}
-  <button {{action 'closeModal'}} class="ember-modal-close-button">
-    <span class="ember-modal-close-button-text">Close</span>
-    <span>X</span>
-  </button>
-{{/if}}
+{{!-- {{#if showCloseButton}} --}}
+  {{ember-modal-close-button onClick='closeModal'}}
+{{!-- {{/if}} --}}
 
 {{yield}}
