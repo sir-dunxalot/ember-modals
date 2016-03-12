@@ -5,18 +5,18 @@ const { run } = Ember;
 export default function(context, options) {
   return new Ember.RSVP.Promise((resolve) => {
 
-    run(() => {
-      context.modals.send('showModal', options);
+    run(context, function() {
+      this.modals.send('showModal', options);
 
-      run.scheduleOnce('afterRender', context, function() {
+      run.scheduleOnce('afterRender', this, function() {
         const $this = this.$();
 
         resolve({
           $overlay: $this.find('.ember-modal-overlay').last(),
-          $html: $this,
+          $this,
         });
       });
     });
 
   });
-};
+}

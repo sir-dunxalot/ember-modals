@@ -55,7 +55,7 @@ export default Ember.Service.extend(
 
   init() {
     this._super(...arguments);
-    this.modalsInDom = Ember.A();
+    this.clearModals(); // Init the modals array
   },
 
 });

@@ -19,7 +19,9 @@ export default Ember.Component.extend({
   actions: {
     closeModal() {
       this._hide().then(() => {
-        this.modals.send('removeModal', this.get('modal'));
+        const modalsService = this.modals || this.get('modal.context').modals; // For testing
+
+        modalsService.send('removeModal', this.get('modal'));
       });
     },
   },
@@ -67,6 +69,8 @@ export default Ember.Component.extend({
 
         /* Don't let a click on a child of the overlay
         close the overlay */
+
+        console.log(event);
 
         if (event.target === parentView.get('element')) {
           this.send('closeModal');
