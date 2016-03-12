@@ -1,4 +1,4 @@
-{{#each modals.modalsInDom as |modal|}}
+{{#each targetObject.modals.modalsInDom as |modal|}}
 
   {{!-- Overlay --}}
 
@@ -26,3 +26,5 @@
   {{/ember-modal-overlay}}
 
 {{/each}}
+
+{{yield}}

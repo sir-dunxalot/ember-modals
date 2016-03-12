@@ -5,20 +5,18 @@ moduleForComponent('ember-modal-close-button', 'Integration | Component | ember 
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('Clicking', function(assert) {
 
-  this.render(hbs`{{ember-modal-close-button}}`);
+  assert.expect(2);
 
-  assert.equal(this.$().text().trim(), '');
+  this.render(hbs`{{ember-modal-close-button onClick='clickReceived'}}`);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#ember-modal-close-button}}
-      template block text
-    {{/ember-modal-close-button}}
-  `);
+  this.on('clickReceived', () => {
+    assert.ok(true, 'A click should send the onClick action');
+  });
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$().text().trim().indexOf('X'),
+    'Should contain a close icon');
+
+  this.$().find('button')[0].click();
 });

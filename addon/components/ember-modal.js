@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   modal: null,
   showCloseButton: false,
   tabIndex: 1,
+  tagName: 'section',
 
   actions: {
     closeModal() {
@@ -53,7 +54,13 @@ export default Ember.Component.extend({
       const parentView = this.get('parentView');
 
       this._show().then(() => {
-        this.$()[0].focus();
+        const $this = this.$();
+
+        /* Wrap in an if ($this) for testing */
+
+        if ($this) {
+          $this[0].focus();
+        }
       });
 
       parentView.$().click((event) => {

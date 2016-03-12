@@ -13,6 +13,23 @@ export default Ember.Service.extend(
       this.get('modalsInDom').removeObject(modal);
     },
 
+    /**
+    Pass an object  `showModal()` that contains `componentName` (required) plus any numebr of optional params:
+
+    ```js
+    showModal({
+      componentName: 'modals/welcom', // The modal content component
+      context: this, // The targetObject for the modal content component
+      modalClassName: 'modal-warning',
+      overlayClassName: 'overlay-transparent',
+    });
+    ```
+
+    @event showModal
+    @param Object modal The options to render the modal with
+    @param Object [context] The targetObject for the component when it's rendered
+    */
+
     showModal(modal, context) {
       let modalObject = modal;
 
@@ -40,21 +57,5 @@ export default Ember.Service.extend(
     this._super(...arguments);
     this.modalsInDom = Ember.A();
   },
-
-  /**
-  Pass an object  `showModal()` that contains `componentName` (required) plus any numebr of optional params:
-
-  ```js
-  showModal({
-    componentName: 'modals/welcom', // The modal content component
-    context: this, // The targetObject for the modal content component
-    modalClassName: 'modal-warning',
-    overlayClassName: 'overlay-transparent',
-  });
-  ```
-
-  @method showModal
-  @param Object modal The options to render the modal with
-  */
 
 });
