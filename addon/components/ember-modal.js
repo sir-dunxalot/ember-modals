@@ -16,6 +16,8 @@ export default Ember.Component.extend({
   tabIndex: 1,
   tagName: 'section',
 
+  _animationDuration: 0,
+
   actions: {
     closeModal() {
       this._hide().then(() => {
@@ -28,21 +30,17 @@ export default Ember.Component.extend({
 
   hide() {
     return new RSVP.Promise((resolve) => {
-      const animationDuration = parseFloat(this.$().css('transition-duration') || 0);
-
       run.later(() => {
         resolve();
-      }, animationDuration * 1000);
+      }, this.get('_animationDuration'));
     });
   },
 
   show() {
     return new RSVP.Promise((resolve) => {
-      const animationDuration = parseFloat(this.$().css('transition-duration') || 0);
-
       run.later(() => {
         resolve();
-      }, animationDuration * 1000);
+      }, this.get('_animationDuration'));
     });
   },
 
@@ -54,6 +52,10 @@ export default Ember.Component.extend({
 
     run.scheduleOnce('afterRender', () => {
       const parentView = this.get('parentView');
+      const transitionDuration = this.$().css('transition-duration');
+      const animationDuration = parseFloat(transitionDuration || 0) * 1000;
+
+      this.set('_animationDuration', animationDuration);
 
       this._show().then(() => {
         const $this = this.$();
@@ -69,8 +71,6 @@ export default Ember.Component.extend({
 
         /* Don't let a click on a child of the overlay
         close the overlay */
-
-        console.log(event);
 
         if (event.target === parentView.get('element')) {
           this.send('closeModal');

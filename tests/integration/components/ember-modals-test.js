@@ -133,6 +133,9 @@ test('It renders configurable, useable close buttons', function(assert) {
         showCloseButton: true,
       }).then(({ $overlay }) => {
         const $buttons = $overlay.find('.ember-modal-close-button');
+        // const $modal = $overlay.find('.ember-modal');
+
+        // $modal.css('transition-duration')
 
         assert.equal($buttons.length, 1,
           'Should have a close button');
@@ -151,7 +154,7 @@ test('It renders configurable, useable close buttons', function(assert) {
               'Should remove modal when close button is clicked');
 
             done();
-          }, 1000); // Because hide() animations are 1s by default
+          }, 10);
         });
       });
     });
@@ -186,7 +189,7 @@ test('It closes modals when esc is hit', function(assert) {
 
         done();
 
-      }, 1000);
+      }, 10);
     });
   });
 });
@@ -219,7 +222,7 @@ test('It closes modals when overlays are clicked', function(assert) {
 
         done();
 
-      }, 1000);
+      }, 10);
     });
   });
 });

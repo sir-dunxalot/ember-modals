@@ -4,3 +4,16 @@ body {
   width: 100%;
   margin: 0;
 }
+
+/* Make animations immediate to speed up the test suite */
+
+#ember-testing-container {
+  .ember-modal-overlay,
+  .ember-modal {
+    -webkit-transition-duration: 0ms;
+    -moz-transition: 0ms;
+    -ms-transition: 0ms;
+    -o-transition: 0ms;
+    transition: 0ms;
+  }
+}
