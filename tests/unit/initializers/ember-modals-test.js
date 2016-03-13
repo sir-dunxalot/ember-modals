@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import EmberModalsInitializer from 'dummy/initializers/ember-modals';
+import ModalsService from 'ember-modals/services/modals';
 import { module, test } from 'qunit';
 
 let application;
@@ -13,10 +14,23 @@ module('Unit | Initializer | ember modals', {
   }
 });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test('it injects the modals service', function(assert) {
   EmberModalsInitializer.initialize(application);
 
-  // you would normally confirm the results of the initializer here
-  assert.ok(true);
+  const container = application.__container__;
+
+  assert.expect(3);
+
+  application.register('service:modals', ModalsService);
+
+  ['controller', 'route'].forEach((name) => {
+
+    assert.ok(container.lookup(`${name}:basic`).create().modals,
+      `Should have the modals service injected on ${name}s`);
+
+  });
+
+  assert.ok(container.lookup('component:linkTo').modals,
+    'Should have the modal service injected on components');
+
 });
