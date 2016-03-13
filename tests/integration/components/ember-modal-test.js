@@ -7,8 +7,14 @@ moduleForComponent('ember-modal', 'Integration | Component | ember modal', {
 
 test('It renders modal content', function(assert) {
 
-  this.on('didShowModal', function() {
+  /* We only do a few assertions here because most unit
+  testing occurs in the {{ember-modals}} component unit
+  test */
 
+  assert.expect(4);
+
+  this.on('didShowModal', function() {
+    assert.ok(true, 'Should send show action on didRender');
   });
 
   this.render(hbs`{{ember-modal}}`);

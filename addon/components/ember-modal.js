@@ -5,16 +5,22 @@ const { RSVP, on, run } = Ember;
 const className = 'ember-modal';
 
 export default Ember.Component.extend({
+
+  /* Options */
+
+  modal: null,
+  onHide: 'didHideModal',
+  onShow: 'didShowModal',
+  showCloseButton: false,
+
+  /* Properties */
+
   ariaRole: 'dialog',
   attributeBindings: ['hidden:aria-hidden', 'tabIndex'],
   classNames: [className],
   classNameBindings: [`hidden:${className}-hidden`],
   hidden: true,
   layout,
-  modal: null,
-  onHide: 'didHideModal',
-  onShow: 'didShowModal',
-  showCloseButton: false,
   tabIndex: 1,
   tagName: 'section',
 
