@@ -8,13 +8,14 @@ export default Ember.Component.extend({
   classNames: [className],
   hidden: true,
   layout,
+  modal: null,
 
   actions: {
-    hide() {
+    didHideModal() {
       this.set('hidden', true);
     },
 
-    show() {
+    didShowModal() {
       this.set('hidden', false);
     },
   },

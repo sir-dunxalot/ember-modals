@@ -4,24 +4,15 @@
 
   {{#ember-modal-overlay
     class=modal.overlayClassName
+    modal=modal
   }}
 
-    {{!-- Modal --}}
+    {{!-- Modal content --}}
 
-    {{#ember-modal
-      class=modal.modalClassName
+    {{component modal.componentName
       modal=modal
-      showCloseButton=modal.showCloseButton
+      targetObject=(if modal.context modal.context targetObject)
     }}
-
-      {{!-- Modal content --}}
-
-      {{component modal.componentName
-        modal=modal
-        targetObject=(if modal.context modal.context targetObject)
-      }}
-
-    {{/ember-modal}}
 
   {{/ember-modal-overlay}}
 

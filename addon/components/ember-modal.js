@@ -12,6 +12,8 @@ export default Ember.Component.extend({
   hidden: true,
   layout,
   modal: null,
+  onHide: 'didHideModal',
+  onShow: 'didShowModal',
   showCloseButton: false,
   tabIndex: 1,
   tagName: 'section',
@@ -85,14 +87,10 @@ export default Ember.Component.extend({
     }
   },
 
-  willDestroy() {
-    this.set('ariaHidden', true);
-  },
-
   _hide() {
     return new RSVP.Promise((resolve) => {
       this.set('hidden', true);
-      this.get('parentView').send('hide');
+      this.sendAction('onHide');
 
       this.hide().then(() => {
         resolve();
@@ -103,7 +101,7 @@ export default Ember.Component.extend({
   _show() {
     return new RSVP.Promise((resolve) => {
       this.set('hidden', false);
-      this.get('parentView').send('show');
+      this.sendAction('onShow');
 
       this.show().then(() => {
         resolve();

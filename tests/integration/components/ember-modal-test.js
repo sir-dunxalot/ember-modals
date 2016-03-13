@@ -5,20 +5,23 @@ moduleForComponent('ember-modal', 'Integration | Component | ember modal', {
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('It renders modal content', function(assert) {
+
+  this.on('didShowModal', function() {
+
+  });
 
   this.render(hbs`{{ember-modal}}`);
 
   assert.equal(this.$().text().trim(), '');
 
-  // Template block usage:
   this.render(hbs`
     {{#ember-modal}}
-      template block text
+      Modal content
     {{/ember-modal}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'Modal content',
+    'Should render content in a modal');
+
 });
