@@ -1,0 +1,15 @@
+{{!-- Modal --}}
+
+{{#if modal}}
+  {{#ember-modal
+    class=modal.modalClassName
+    modal=modal
+    showCloseButton=modal.showCloseButton
+  }}
+
+    {{yield}}
+
+  {{/ember-modal}}
+{{else}}
+  {{yield}}
+{{/if}}

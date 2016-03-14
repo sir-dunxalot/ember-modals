@@ -1,0 +1,21 @@
+{{#each targetObject.modals.modalsInDom as |modal|}}
+
+  {{!-- Overlay --}}
+
+  {{#ember-modal-overlay
+    class=modal.overlayClassName
+    modal=modal
+  }}
+
+    {{!-- Modal content --}}
+
+    {{component modal.componentName
+      modal=modal
+      targetObject=(if modal.context modal.context targetObject)
+    }}
+
+  {{/ember-modal-overlay}}
+
+{{/each}}
+
+{{yield}}

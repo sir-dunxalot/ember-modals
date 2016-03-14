@@ -1,0 +1,90 @@
+$modalPadding: 30px;
+
+.ember-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  height: 100vh;
+  width: 100%;
+  width: 100vw;
+
+  display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+  display: -moz-box;      /* OLD: Firefox (buggy) */
+  display: -ms-flexbox;   /* MID: IE 10 */
+  display: -webkit-flex;  /* NEW, Chrome 21+ */
+  display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
+
+  -webkit-box-align: center; -moz-box-align: center; /* OLD… */
+  -ms-flex-align: center; /* You know the drill now… */
+  -webkit-align-items: center;
+  align-items: center;
+
+  -webkit-box-pack: center; -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+
+  background-color: rgba(0,0,0,0.8);
+}
+
+.ember-modal {
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 0 3px 20px 2px rgba(0,0,0,0.5);
+
+  padding: $modalPadding;
+  min-width: 200px;
+  min-height: 100px;
+  outline: none; // For tabindex
+  position: relative;
+
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+
+  &.ember-modal-hidden {
+    -webkit-transform: translateY(50px);
+    -moz-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    transform: translateY(50px);
+  }
+}
+
+.ember-modal-overlay.ember-modal-overlay-hidden,
+.ember-modal.ember-modal-hidden {
+   opacity: 0;
+}
+
+.ember-modal-overlay,
+.ember-modal {
+  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+  -moz-transition: opacity 0.5s, -moz-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: opacity;
+  opacity: 1;
+}
+
+.ember-modal-close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: $modalPadding / 1.5;
+  cursor: pointer;
+
+  background: none;
+  border: none;
+  outline: none;
+
+  font-family: Century Gothic, sans-serif;
+  font-size: 16px;
+  color: #999;
+}
+
+.ember-modal-close-button-text {
+  display: none;
+}

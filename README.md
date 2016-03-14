@@ -1,49 +1,138 @@
-Ember Modals [![Build Status](https://travis-ci.org/sir-dunxalot/ember-modals.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-modals)
-======
+# Ember Modals
 
-`ember-modals` is an Ember addon that adds API-like functionality for rendering and managing modals in your Ember application. The primary purpose of this addon is to manage modal functionality in your JS whilst getting out of the way for styling and templating.
+Adds API-like functionality for rendering and managing modals in your Ember application.
 
-This allows you to match your styleguide and mockups precisely. However, basic stylesheets and animations are included and may be imported.
+This addon tracks the context from where you showed a modal, allowing you to easily interact with your current route, component, or controller from within the modal.
 
+- [Installation](#installation)
+- [Showing modals](#showing-modals)
+- [Passing modal options](#passing-modal-options)
+- [Accessing the caller context](#accessing-the-caller-context)
+- [Closing modals](#closing-modals)
+
+## Installation
+
+```sh
+ember install ember-modals
 ```
-ember install:addon ember-modals
+
+And add the `{{ember-modals}}` component in your application template:
+
+```hbs
+{{outlet}}
+
+{{ember-modals}}
 ```
 
-### Features:
+## Showing Modals
 
-- Complete control over the context your modals renders in
-- By default modals will render in the context of the current route
-- Use multiple outlets with different modal views and overlays
-- Action handling enables you to interact with modals from different areas of your app
-- Easily customize animations (JS or CSS)
-- Show multiple modals at the same time
-- Import stylesheets for layout and animation
+To show a modal using a HTMLBars action, call `showModal` and pass the name of any component to render as a modal.
 
-Please note, there may be backwards incompatible changes before v1.0.0.
+You must specify `target` as `modals`. The target will reference the `modals` service, which is injected into routes, components, and controllers by default.
 
+```hbs
+<button {{action 'showModal' 'welcome-dialog' target=modals}}>
+  Show welcome
+</button>
+```
 
-## Documentation
+The showModal action accepts a second, optional parameter, context:
 
-Documentation, including setup, usage, customization, styling/animating, and development can be found in [the wiki](https://github.com/sir-dunxalot/ember-modals/wiki).
+```hbs
+<button {{action 'showModal' 'welcome-dialog' this target=modals}}>
+  Show welcome
+</button>
+```
 
+When you pass a context, this will be set as the `targetObject` of the component you passed.
 
-## Demo
+## Passing Modal Options
 
-In absence of an online demo (WIP), you can clone this repo to your desktop and run `ember s`. You will see a lot of buttons that allow you to show preset modals. Each modal contains info about the context in which it's rendered.
+Instead of passing a component and context to the `showModal` action, you can pass a single options object.
 
-The demo uses the `'scale'` animation (see [styling](https://github.com/sir-dunxalot/ember-modals/wiki/Styling) for more info).
+This object supports more options that name-and-context approach mentioned above:
 
+```js
+/* Within some route, component, or controller... */
 
-## Issues
+this.modals.send('showModal', {
+  componentName: 'my-welcome-dialog',
+  context: this,
+  modalClassName: 'welcome-modal',
+  overlayClassName: 'overlay-transparent',
+  showCloseButton: true,
+});
+```
 
-If you have any issues or feature requests, please [open an issue](https://github.com/sir-dunxalot/ember-modals/issues/new) or submit a PR.
+## Accessing the Caller Context
 
+Congratulations! You shiney new modal has been render in the DOM!
 
-## Features and Improvements in the Works
+Because you rendered it from within some component or route, you might want to access properties or actions on that class. To do this, just access the `targetObject` property in your component or component's layout:
 
-- Improved WAI-ARIA support and documentation (aria-haspopup for buttons and aria-label for modals)
-- Expose a `resetModal()` method to reset default properties
-- More Browser support for included stylesheets
-- Test(s) for animation duration of modals
-- Hitting esc should close the modal
-- Online demo
+```js
+/* Some route, component, or controller... */
+
+export default Ember.Component.extend({
+  userName: 'Dave',
+
+  actions: {
+    checkWeCanDeleteThis() {
+      this.modals.showModal('confirm-delete', this);
+    },
+
+    confirmDelete() {
+      this.get('model').deleteRecord();
+    }
+  },
+});
+```
+
+```hbs
+/* templates/components/confirm-delete.hbs */
+
+Hey, {{targetObject.userName}}! Are you sure you want to delete this?
+
+<button {{action 'confirmDelete' target=targetObject}}>
+  Yes!
+</button>
+
+<button {{action 'closeModal'}}>
+  No
+</button>
+```
+
+**Note two things:**
+
+- You must have passed `context` to `showModal()` as described in [passing modal options](#passing-modal-options)**
+- Set `target=targetObject` to call actions on the route or component you rendered the modal from
+
+You can also access the `modal` property, giving you access to the original options to passed to `showModal()`:
+
+```hbs
+/* templates/components/confirm-delete.hbs */
+
+I'm showing {{modal.componentName}}. {{!-- confirm-delete --}}
+
+The context is {{modal.context}}, which is the same as {{targetObject}}.
+
+The modal class name is {{modal.modalClassName}}.
+```
+
+## Closing Modals
+
+There are three ways modals can be closed:
+
+- Hitting `esc`
+- Clicking on the overlay
+- By sending the `closeModal` action from within the modal content:
+
+```hbs
+/* templates/components/welcome-dialog.hbs */
+
+Welcome to this app!
+
+<button {{action 'closeModal'}}>
+  Close modal
+</button>
+```
