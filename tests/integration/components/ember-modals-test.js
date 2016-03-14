@@ -161,48 +161,46 @@ test('It renders configurable, useable close buttons', function(assert) {
   });
 });
 
-/* Replace this test when Phantom can support it easily */
+test('It closes modals when esc is hit', function(assert) {
+  const done = assert.async();
 
-// test('It closes modals when esc is hit', function(assert) {
-//   const done = assert.async();
+  assert.expect(2);
 
-//   assert.expect(2);
+  this.render(hbs`{{ember-modals}}`);
 
-//   this.render(hbs`{{ember-modals}}`);
+  showModalAndRender(this, {
+    componentName: 'demo-modal-1',
+    context: this,
+  }).then(({ $overlay, $this }) => {
 
-//   showModalAndRender(this, {
-//     componentName: 'demo-modal-1',
-//     context: this,
-//   }).then(({ $overlay, $this }) => {
+    /* Fake event in a Phantom-compatible way */
 
-//     /* Fake event in a Phantom-compatible way */
+    const event = document.createEvent('Events');
 
-//     const event = document.createEvent('Events');
+    event.initEvent('keyup', true, true);
+    event.which = 27;
+    event.keyCode = 27;
 
-//     event.initEvent('keyup', true, true);
-//     event.which = 27;
-//     event.keyCode = 27;
+    assert.ok($overlay, 'Should render a modal');
 
-//     assert.ok($overlay, 'Should render a modal');
+    /* Simulate esc being hit... */
 
-//     /* Simulate esc being hit... */
+    $this.find('.ember-modal')[0].dispatchEvent(event);
 
-//     $this.find('.ember-modal')[0].dispatchEvent(event);
+    /* Now, check the modal exists */
 
-//     /* Now, check the modal exists */
+    run.scheduleOnce('afterRender', this, function() {
+      run.later(this, function() {
 
-//     run.scheduleOnce('afterRender', this, function() {
-//       run.later(this, function() {
+        assert.equal(this.$().find('.ember-modal').length, 0,
+          'Should close the modal when esc is hit');
 
-//         assert.equal(this.$().find('.ember-modal').length, 0,
-//           'Should close the modal when esc is hit');
+        done();
 
-//         done();
-
-//       }, 10);
-//     });
-//   });
-// });
+      }, 200);
+    });
+  });
+});
 
 test('It closes modals when overlays are clicked', function(assert) {
   const done = assert.async();
@@ -218,7 +216,7 @@ test('It closes modals when overlays are clicked', function(assert) {
 
     assert.ok($overlay, 'Should render a modal');
 
-    /* Simulate esc being hit... */
+    /* Simulate clicking the modal... */
 
     $this.find('.ember-modal-overlay').click();
 
@@ -228,11 +226,11 @@ test('It closes modals when overlays are clicked', function(assert) {
       run.later(this, function() {
 
         assert.equal(this.$().find('.ember-modal').length, 0,
-          'Should close the modal when esc is hit');
+          'Should close the modal when overlay is clicked');
 
         done();
 
-      }, 10);
+      }, 200); // Longer delay because of Phantom
     });
   });
 });
